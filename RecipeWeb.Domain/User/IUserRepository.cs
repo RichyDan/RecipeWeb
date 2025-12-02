@@ -1,4 +1,4 @@
-﻿namespace RecipeWeb.Domain.User.Repositories;
+﻿namespace RecipeWeb.Domain.User;
 
 public interface IUserRepository
 {
@@ -8,7 +8,5 @@ public interface IUserRepository
     Task AddAsync(User user);
     Task UpdateAsync(User user);
     Task DeleteAsync(User user);
-    Task<bool> ExistsByLoginAsync(string login);
-    Task<bool> ExistsByFirstNameAsync(string firstname);
     Task<IEnumerable<User>> GetAllAsync();
 }   
