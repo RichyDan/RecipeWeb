@@ -1,14 +1,18 @@
 ﻿using RecipeWeb.Domain.Common;
 namespace RecipeWeb.Domain.User;
 
-public class User : EntityId
+public class User : Entity
 {
     public string FirstName { get; private set; }
     public string Login { get; private set; }
     public string Password { get; private set; }
     public string Description { get; private set; }
 
-    public User (string firstName, string login, string password, string description)
+    public User (
+        string firstName, 
+        string login, 
+        string password, 
+        string description)
     {
         Id = Guid.NewGuid();
         FirstName = firstName;
