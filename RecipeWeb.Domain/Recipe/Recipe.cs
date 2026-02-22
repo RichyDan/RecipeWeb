@@ -1,6 +1,6 @@
 ﻿namespace RecipeWeb.Domain.Recipe;
 
-public class Recipe
+public class REcipe
 {
     
 }
