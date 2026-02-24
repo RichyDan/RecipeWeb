@@ -7,9 +7,12 @@ public class Recipe : Entity
     public Recipe (
         string name, 
         string description,
-        string timeToCook, 
-        string countPersons,
-        string imageUrl)
+        TimeSpan timeToCook, 
+        Int32 countPersons,
+        string imageUrl,
+        List<Ingredient> ingredients,
+        List<Step> steps,
+        List<Tag>? tags = null)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -17,15 +20,15 @@ public class Recipe : Entity
         TimeToCook = timeToCook;
         CountPersons = countPersons;
         ImageUrl = imageUrl;
-        
-        Ingredients = new List<Ingredient>(); // Инициализация пустых списков
-        Tags = new List<Tag>();
-        Steps = new List<Step>();
+
+        Ingredients = ingredients;
+        Steps = steps;
+        Tags = tags ?? new List<Tag>();
     }
     
     public string Name { get; private set; }
-    public string TimeToCook { get; private set; }
-    public string CountPersons { get; private set; }
+    public TimeSpan TimeToCook { get; private set; }
+    public Int32 CountPersons { get; private set; }
     public string Description { get; private set; }
     public string ImageUrl { get; private set; }
     public List<Ingredient> Ingredients { get; private set; }
@@ -35,12 +38,12 @@ public class Recipe : Entity
     public void Update(
         string name, 
         string description, 
-        string timeToCook, 
-        string countPersons,
+        TimeSpan timeToCook, 
+        Int32 countPersons,
         string imageUrl,
-        List<Ingredient> newIngredients = null,
-        List<Tag> newTags = null,
-        List<Step> newSteps = null)
+        List<Ingredient>? ingredients = null,
+        List<Step>? steps = null,
+        List<Tag>? tags = null)
     {
         Name = name;
         Description = description;
@@ -48,22 +51,22 @@ public class Recipe : Entity
         CountPersons = countPersons;
         ImageUrl = imageUrl;
         
-        if (newIngredients != null)
+        if (ingredients != null)
         {
             Ingredients.Clear();
-            Ingredients.AddRange(newIngredients);
+            Ingredients.AddRange(ingredients);
         }
-
-        if (newTags != null)
-        {
-            Tags.Clear();
-            Tags.AddRange(newTags);
-        }
-
-        if (newSteps != null)
+        
+        if (steps != null)
         {
             Steps.Clear();
-            Steps.AddRange(newSteps);
+            Steps.AddRange(steps);
+        }
+        
+        if (tags != null)
+        {
+            Tags.Clear();
+            Tags.AddRange(tags);
         }
     }
 }
