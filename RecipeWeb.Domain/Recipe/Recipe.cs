@@ -1,4 +1,5 @@
 ﻿using RecipeWeb.Domain.Common;
+using RecipeWeb.Domain.User;
 
 namespace RecipeWeb.Domain.Recipe;
 
@@ -7,9 +8,9 @@ public class Recipe : Entity
     public Recipe (
         string name, 
         string description,
-        TimeSpan timeToCook, 
+        Int32 timeToCook, 
         Int32 countPersons,
-        string imageUrl,
+        string imagePath,
         List<Ingredient> ingredients,
         List<Step> steps,
         List<Tag>? tags = null)
@@ -19,7 +20,7 @@ public class Recipe : Entity
         Description = description;
         TimeToCook = timeToCook;
         CountPersons = countPersons;
-        ImageUrl = imageUrl;
+        ImagePath = ImagePath;
 
         Ingredients = ingredients;
         Steps = steps;
@@ -27,10 +28,10 @@ public class Recipe : Entity
     }
     
     public string Name { get; private set; }
-    public TimeSpan TimeToCook { get; private set; }
+    public Int32 TimeToCook { get; private set; }
     public Int32 CountPersons { get; private set; }
     public string Description { get; private set; }
-    public string ImageUrl { get; private set; }
+    public string ImagePath { get; private set; }
     public List<Ingredient> Ingredients { get; private set; }
     public List<Step> Steps { get; private set; }
     public List<Tag> Tags { get; private set; }
@@ -38,9 +39,9 @@ public class Recipe : Entity
     public void Update(
         string name, 
         string description, 
-        TimeSpan timeToCook, 
+        Int32 timeToCook, 
         Int32 countPersons,
-        string imageUrl,
+        string imagePath,
         List<Ingredient>? ingredients = null,
         List<Step>? steps = null,
         List<Tag>? tags = null)
@@ -49,7 +50,7 @@ public class Recipe : Entity
         Description = description;
         TimeToCook = timeToCook;
         CountPersons = countPersons;
-        ImageUrl = imageUrl;
+        ImagePath = imagePath;
         
         if (ingredients != null)
         {

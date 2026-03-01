@@ -1,6 +1,6 @@
 ﻿using RecipeWeb.Domain.Common;
 
-namespace RecipeWeb.Domain;
+namespace RecipeWeb.Domain.Recipe;
 
 public class Ingredient : Entity
 {

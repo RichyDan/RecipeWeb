@@ -1,18 +1,18 @@
 ﻿using RecipeWeb.Domain.Common;
 
-namespace RecipeWeb.Domain;
+namespace RecipeWeb.Domain.Recipe;
 
 public class Step : Entity
 {
     public Step (
-        List<string> instructions,
-        Guid recipeId
+        Guid recipeId,
+        string instructions
     )
     {
         Id = Guid.NewGuid();
         Instructions = instructions;
     }
-    
-    public List<string> Instructions { get; private set; }
+
     public Guid RecipeId { get; private set; }
+    public string Instructions { get; private set; }
 }
