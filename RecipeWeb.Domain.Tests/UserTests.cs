@@ -1,20 +1,22 @@
 ﻿using FluentAssertions;
+using RecipeWeb.Domain.Useraggragate;
+using Guid = System.Guid;
 
 namespace RecipeWeb.Domain.Tests;
 
 public class UserTests
 {
     [Fact]
-    public void Constructor_ShouldInitializeCorrectly()
+    public void Create_User()
     {
         // Arrange
-        var firstName = "Толя";
-        var login = "yalot_vopop";
-        var password = "Qwerty1!";
-        var description = "Люблю готовить";
+        string firstName = "Толя";
+        string login = "yalot_vopop";
+        string password = "Qwerty1!";
+        string description = "Люблю готовить";
 
         // Act
-        var user = new User.User(firstName, login, password, description);
+        User user = new User(firstName, login, password, description);
 
         // Assert
         user.Id.Should().NotBeEmpty();
@@ -31,8 +33,8 @@ public class UserTests
     public void AddLike_ShouldAddRecipeToLiked()
     {
         // Arrange
-        var user = CreateValidUser();
-        var recipeId = Guid.NewGuid();
+        User user = CreateValidUser();
+        Guid recipeId = Guid.NewGuid();
 
         // Act
         user.AddLike(recipeId);
@@ -46,8 +48,8 @@ public class UserTests
     public void AddLike_ShouldNotAddDuplicate()
     {
         // Arrange
-        var user = CreateValidUser();
-        var recipeId = Guid.NewGuid();
+        User user = CreateValidUser();
+        Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);
 
         // Act
@@ -61,8 +63,8 @@ public class UserTests
     public void RemoveLike_ShouldRemoveRecipe()
     {
         // Arrange
-        var user = CreateValidUser();
-        var recipeId = Guid.NewGuid();
+        User user = CreateValidUser();
+        Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);
 
         // Act
@@ -77,8 +79,8 @@ public class UserTests
     public void AddToFavorites_ShouldAddRecipe()
     {
         // Arrange
-        var user = CreateValidUser();
-        var recipeId = Guid.NewGuid();
+        User user = CreateValidUser();
+        Guid recipeId = Guid.NewGuid();
 
         // Act
         user.AddToFavorites(recipeId);
@@ -92,8 +94,8 @@ public class UserTests
     public void RemoveFromFavorites_ShouldClearCollection()
     {
         // Arrange
-        var user = CreateValidUser();
-        var recipeId = Guid.NewGuid();
+        User user = CreateValidUser();
+        Guid recipeId = Guid.NewGuid();
         user.AddToFavorites(recipeId);
 
         // Act
@@ -108,8 +110,8 @@ public class UserTests
     public void Update_ShouldUpdateAllFieldsAndKeepLikes()
     {
         // Arrange
-        var user = new User.User("OldName", "OldLogin", "Password", "Description1");
-        var recipeId = Guid.NewGuid();
+        User user = new User("OldName", "OldLogin", "Password", "Description1");
+        Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);
 
         // Act
@@ -126,8 +128,8 @@ public class UserTests
     }
 
     // Вспомогательный метод для быстрого создания пользователя
-    private User.User CreateValidUser()
+    private User CreateValidUser()
     {
-        return new User.User("TestUser", "test_login", "12345678", "Description");
+        return new User("TestUser", "test_login", "12345678", "Description");
     }
 }

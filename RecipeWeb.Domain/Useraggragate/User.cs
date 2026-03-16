@@ -1,5 +1,5 @@
 ﻿using RecipeWeb.Domain.Common;
-namespace RecipeWeb.Domain.User;
+namespace RecipeWeb.Domain.Useraggragate;
 
 public class User : Entity
 {
@@ -12,6 +12,8 @@ public class User : Entity
         string password, 
         string description)
     {
+        Validate(firstName, login, password);
+        
         Id = Guid.NewGuid();
         FirstName = firstName;
         Login = login;
@@ -28,23 +30,32 @@ public class User : Entity
     public IReadOnlyCollection<UserFavorite> FavoriteRecipes => _favoriteRecipes.AsReadOnly();
     
     public void Update(
-        string firstname, 
+        string firstName, 
         string login, 
         string password, 
-        string description,
-        IEnumerable<UserLike>? likedRecipes = null, 
-        IEnumerable<UserFavorite>? favoriteRecipes = null)
+        string description)
     {
-        FirstName = firstname;
+        Validate(firstName, login, password);
+        
+        FirstName = firstName;
         Login = login;
         Password = password;
         Description = description;
-        
-        if (likedRecipes != null)
-            _likedRecipes.AddRange(likedRecipes);
+    }
+    
+    private void Validate(string firstName, string login, string password)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new ArgumentException("Имя не может быть пустым", nameof(firstName));
 
-        if (favoriteRecipes != null)
-            _favoriteRecipes.AddRange(favoriteRecipes);
+        if (string.IsNullOrWhiteSpace(login))
+            throw new ArgumentException("Логин не может быть пустым", nameof(login));
+
+        if (login.Length < 3)
+            throw new ArgumentException("Логин должен содержать минимум 3 символа", nameof(login));
+
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+            throw new ArgumentException("Пароль должен быть не менее 6 символов", nameof(password));
     }
     
     public void AddLike(Guid recipeId)
@@ -57,7 +68,7 @@ public class User : Entity
 
     public void RemoveLike(Guid recipeId)
     {
-        var like = _likedRecipes.FirstOrDefault(l => l.RecipeId == recipeId);
+        UserLike? like = _likedRecipes.FirstOrDefault(l => l.RecipeId == recipeId);
         if (like != null)
         {
             _likedRecipes.Remove(like);
@@ -74,7 +85,7 @@ public class User : Entity
 
     public void RemoveFromFavorites(Guid recipeId)
     {
-        var favorite = _favoriteRecipes.FirstOrDefault(f => f.RecipeId == recipeId);
+        UserFavorite? favorite = _favoriteRecipes.FirstOrDefault(f => f.RecipeId == recipeId);
         if (favorite != null)
         {
             _favoriteRecipes.Remove(favorite);

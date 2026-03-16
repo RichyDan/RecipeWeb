@@ -9,6 +9,9 @@ public class Tag : Entity
         Guid recipeId
     )
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Тег не может быть пустым");
+        
         Id = Guid.NewGuid();
         Name = name;
     }

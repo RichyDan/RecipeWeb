@@ -1,4 +1,4 @@
-﻿namespace RecipeWeb.Domain.User;
+﻿namespace RecipeWeb.Domain.Useraggragate;
 
 public class UserLike
 {

@@ -9,6 +9,9 @@ public class Step : Entity
         string instructions
     )
     {
+        if (string.IsNullOrWhiteSpace(instructions))
+            throw new ArgumentException("Инструкции не могут быть пустыми");
+        
         Id = Guid.NewGuid();
         Instructions = instructions;
     }
