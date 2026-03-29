@@ -9,7 +9,7 @@ public class Recipe : Entity
     private readonly List<Step> _steps = new();
     private readonly List<Tag> _tags = new();
     
-    private void Validate(string name, string description, Int32 timeToCook, int countPersons, string? imageUrl)
+    private void Validate(string name, string description, uint timeToCook, uint countPersons, string? imageUrl)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Название рецепта не может быть пустым");
@@ -30,8 +30,8 @@ public class Recipe : Entity
     public Recipe (
         string name, 
         string description,
-        Int32 timeToCook, 
-        Int32 countPersons,
+        uint timeToCook, 
+        uint countPersons,
         string imagePath,
         IEnumerable<Ingredient> ingredients,
         IEnumerable<Step> steps,
@@ -52,8 +52,8 @@ public class Recipe : Entity
     }
     
     public string Name { get; private set; }
-    public Int32 TimeToCook { get; private set; }
-    public Int32 CountPersons { get; private set; }
+    public uint TimeToCook { get; private set; }
+    public uint CountPersons { get; private set; }
     public string Description { get; private set; }
     public string ImagePath { get; private set; }
     
@@ -64,8 +64,8 @@ public class Recipe : Entity
     public void Update(
         string name, 
         string description, 
-        Int32 timeToCook, 
-        Int32 countPersons,
+        uint timeToCook, 
+        uint countPersons,
         string imagePath,
         List<Ingredient>? ingredients = null,
         List<Step>? steps = null,
@@ -84,17 +84,29 @@ public class Recipe : Entity
             _ingredients.Clear();
             _ingredients.AddRange(ingredients);
         }
+        else
+        {
+            _ingredients.Clear();
+        }
         
         if (steps != null)
         {
             _steps.Clear();
             _steps.AddRange(steps);
         }
+        else
+        {
+            _steps.Clear();
+        }
 
         if (tags != null)
         {
             _tags.Clear();
             _tags.AddRange(tags);
+        }  
+        else
+        {
+           _tags.Clear(); 
         }
     }
 }

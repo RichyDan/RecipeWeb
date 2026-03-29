@@ -60,7 +60,7 @@ public class User : Entity
     
     public void AddLike(Guid recipeId)
     {
-        if (_likedRecipes.All(l => l.RecipeId != recipeId))
+        if (_likedRecipes.Any(l => l.RecipeId != recipeId))
         {
             _likedRecipes.Add(new UserLike(this.Id, recipeId));
         }
