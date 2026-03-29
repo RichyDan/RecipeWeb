@@ -42,7 +42,7 @@ public class User : Entity
         Description = description;
     }
     
-    private void Validate(string firstName, string login, string password)
+    private static void Validate(string firstName, string login, string password)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException("Имя не может быть пустым", nameof(firstName));

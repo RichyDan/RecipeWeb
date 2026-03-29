@@ -9,7 +9,7 @@ public class Recipe : Entity
     private readonly List<Step> _steps = new();
     private readonly List<Tag> _tags = new();
     
-    private void Validate(string name, string description, uint timeToCook, uint countPersons, string? imageUrl)
+    private static void Validate(string name, string description, uint timeToCook, uint countPersons, string? imageUrl)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Название рецепта не может быть пустым");
