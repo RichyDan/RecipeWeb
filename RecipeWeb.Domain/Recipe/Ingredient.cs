@@ -24,7 +24,7 @@ public class Ingredient : Entity
     
     public void AddProduct(string product)
     {
-        if (product == String.Empty) throw new ArgumentNullException(nameof(product));
+        if (string.IsNullOrEmpty(product)) throw new ArgumentNullException(nameof(product));
 
         if (!_products.Contains(product))
         {
