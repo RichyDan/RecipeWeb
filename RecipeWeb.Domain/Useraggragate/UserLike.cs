@@ -2,7 +2,7 @@
 
 public class UserLike
 {
-    public UserLike(Guid userId, Guid recipeId)
+    public UserLike(Guid userId, Guid recipeId) : base()
     {
         UserId = userId;
         RecipeId = recipeId;

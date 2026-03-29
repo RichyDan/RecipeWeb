@@ -7,12 +7,11 @@ public class Ingredient : Entity
     private readonly List<string> _products = new();
     public Ingredient (
         string name, 
-        IEnumerable<string>? products)
+        IEnumerable<string>? products) : base()
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Название ингредиента не может быть пустым");
         
-        Id = Guid.NewGuid();
         Name = name;
         
         if (products != null)

@@ -17,12 +17,6 @@ public class Recipe : Entity
         if (string.IsNullOrWhiteSpace(description))
             throw new ArgumentException("Описание не может быть пустым");
 
-        if (timeToCook <= 0)
-            throw new ArgumentException("Время приготовления должно быть больше нуля");
-
-        if (countPersons <= 0)
-            throw new ArgumentException("Количество персон должно быть не менее 1");
-
         if (!string.IsNullOrEmpty(imageUrl) && !Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
             throw new ArgumentException("Некорректный формат URL картинки");
     }
@@ -35,11 +29,10 @@ public class Recipe : Entity
         string imagePath,
         IEnumerable<Ingredient> ingredients,
         IEnumerable<Step> steps,
-        IEnumerable<Tag>? tags = null)
+        IEnumerable<Tag>? tags = null) : base()
     {
         Validate(name, description, timeToCook, countPersons, imagePath);
         
-        Id = Guid.NewGuid();
         Name = name;
         Description = description;
         TimeToCook = timeToCook;
@@ -79,34 +72,17 @@ public class Recipe : Entity
         CountPersons = countPersons;
         ImagePath = imagePath;
 
+        _ingredients.Clear();
+        _steps.Clear();
+        _tags.Clear();
+
         if (ingredients != null)
-        {
-            _ingredients.Clear();
             _ingredients.AddRange(ingredients);
-        }
-        else
-        {
-            _ingredients.Clear();
-        }
         
         if (steps != null)
-        {
-            _steps.Clear();
             _steps.AddRange(steps);
-        }
-        else
-        {
-            _steps.Clear();
-        }
 
         if (tags != null)
-        {
-            _tags.Clear();
             _tags.AddRange(tags);
-        }  
-        else
-        {
-           _tags.Clear(); 
-        }
     }
 }

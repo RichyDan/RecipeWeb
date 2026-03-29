@@ -10,11 +10,10 @@ public class User : Entity
         string firstName, 
         string login, 
         string password, 
-        string description)
+        string description) : base()
     {
         Validate(firstName, login, password);
-        
-        Id = Guid.NewGuid();
+
         FirstName = firstName;
         Login = login;
         Password = password;
@@ -60,7 +59,7 @@ public class User : Entity
     
     public void AddLike(Guid recipeId)
     {
-        if (_likedRecipes.Any(l => l.RecipeId != recipeId))
+        if (!_likedRecipes.Any(l => l.RecipeId == recipeId))
         {
             _likedRecipes.Add(new UserLike(this.Id, recipeId));
         }
@@ -77,7 +76,7 @@ public class User : Entity
 
     public void AddToFavorites(Guid recipeId)
     {
-        if (_favoriteRecipes.All(f => f.RecipeId != recipeId))
+        if (!_favoriteRecipes.Any(f => f.RecipeId != recipeId))
         {
             _favoriteRecipes.Add(new UserFavorite(this.Id, recipeId));
         }
