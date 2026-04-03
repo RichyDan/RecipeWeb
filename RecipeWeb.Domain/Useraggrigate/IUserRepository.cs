@@ -1,4 +1,4 @@
-﻿namespace RecipeWeb.Domain.Useraggragate;
+﻿namespace RecipeWeb.Domain.Useraggrigate;
 
 public interface IUserRepository
 {

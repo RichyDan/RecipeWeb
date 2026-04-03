@@ -1,6 +1,6 @@
 ﻿using RecipeWeb.Domain.Common;
 
-namespace RecipeWeb.Domain.Recipe;
+namespace RecipeWeb.Domain.Recipeaggrigate;
 
 public class Step : Entity
 {

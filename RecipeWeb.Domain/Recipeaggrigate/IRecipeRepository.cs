@@ -1,4 +1,4 @@
-﻿namespace RecipeWeb.Domain.Recipe;
+﻿namespace RecipeWeb.Domain.Recipeaggrigate;
 
 public interface IRecipeRepository
 {
