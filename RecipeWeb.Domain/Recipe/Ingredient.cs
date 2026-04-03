@@ -7,10 +7,13 @@ public class Ingredient : Entity
     private readonly List<string> _products = new();
     public Ingredient (
         string name, 
-        IEnumerable<string>? products) : base()
+        IEnumerable<string>? products)
     {
+        // validation
+        ClearErrors();
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Название ингредиента не может быть пустым");
+            AddError(nameof(name), "Название ингредиента не может быть пустым");
+        EnsureValid();
         
         Name = name;
         

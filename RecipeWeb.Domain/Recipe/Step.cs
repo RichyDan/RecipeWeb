@@ -6,10 +6,12 @@ public class Step : Entity
 {
     public Step (
         string instructions
-    ) : base()
+    )
     {
+        ClearErrors();
         if (string.IsNullOrWhiteSpace(instructions))
-            throw new ArgumentException("Инструкции не могут быть пустыми");
+            AddError(nameof(instructions), "Инструкции не могут быть пустыми");
+        EnsureValid();
         
         Instructions = instructions;
     }

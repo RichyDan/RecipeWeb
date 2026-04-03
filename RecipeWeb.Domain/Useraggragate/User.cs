@@ -10,7 +10,7 @@ public class User : Entity
         string firstName, 
         string login, 
         string password, 
-        string description) : base()
+        string description)
     {
         Validate(firstName, login, password);
 
@@ -44,17 +44,21 @@ public class User : Entity
     
     private void Validate(string firstName, string login, string password)
     {
+        ClearErrors();
+        
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("Имя не может быть пустым", nameof(firstName));
+            AddError(nameof(FirstName), "Имя не может быть пустым");
 
         if (string.IsNullOrWhiteSpace(login))
-            throw new ArgumentException("Логин не может быть пустым", nameof(login));
-
-        if (login.Length < 3)
-            throw new ArgumentException("Логин должен содержать минимум 3 символа", nameof(login));
+            AddError(nameof(login), "Логин не может быть пустым");
+        else if (login.Length < 3)
+            AddError(nameof(login), "Логин слишком короткий. Логин должен содержать минимум 3 символа");
 
         if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
-            throw new ArgumentException("Пароль должен быть не менее 6 символов", nameof(password));
+            AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
+        
+        // вызов единого метода для вывода ошибок валидации
+        EnsureValid();
     }
     
     public void AddLike(Guid recipeId)

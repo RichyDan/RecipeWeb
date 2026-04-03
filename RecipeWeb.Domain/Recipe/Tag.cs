@@ -6,10 +6,12 @@ public class Tag : Entity
 {
     public Tag (
         string name
-    ) : base()
+    )
     {
+        ClearErrors();
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Тег не может быть пустым");
+            AddError(nameof(name), "Тег не может быть пустым");
+        EnsureValid();
         
         Name = name;
     }

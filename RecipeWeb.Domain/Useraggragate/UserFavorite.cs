@@ -5,7 +5,7 @@ public class UserFavorite
     public UserFavorite(
         Guid userId,
         Guid recipeId
-    ) : base()
+    )
     {
         UserId = userId;
         RecipeId = recipeId;

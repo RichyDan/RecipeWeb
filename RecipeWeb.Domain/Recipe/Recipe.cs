@@ -9,27 +9,32 @@ public class Recipe : Entity
     private readonly List<Step> _steps = new();
     private readonly List<Tag> _tags = new();
     
-    private void Validate(string name, string description, uint timeToCook, uint countPersons, string? imageUrl)
+    private void Validate(string name, string description, int timeToCook, int countPersons, string? imageUrl)
     {
+        ClearErrors();
+        
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Название рецепта не может быть пустым");
+            AddError(nameof(name), "Название рецепта не может быть пустым");
 
         if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Описание не может быть пустым");
+            AddError(nameof(description), "Описание не может быть пустым");
 
         if (!string.IsNullOrEmpty(imageUrl) && !Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
-            throw new ArgumentException("Некорректный формат URL картинки");
+            AddError(nameof(imageUrl), "Некорректный формат URL картинки");
+        
+        // Вызов единого метода вывода ошибок
+        EnsureValid();
     }
     
     public Recipe (
         string name, 
         string description,
-        uint timeToCook, 
-        uint countPersons,
+        int timeToCook, 
+        int countPersons,
         string imagePath,
         IEnumerable<Ingredient> ingredients,
         IEnumerable<Step> steps,
-        IEnumerable<Tag>? tags = null) : base()
+        IEnumerable<Tag>? tags = null)
     {
         Validate(name, description, timeToCook, countPersons, imagePath);
         
@@ -45,8 +50,8 @@ public class Recipe : Entity
     }
     
     public string Name { get; private set; }
-    public uint TimeToCook { get; private set; }
-    public uint CountPersons { get; private set; }
+    public int TimeToCook { get; private set; }
+    public int CountPersons { get; private set; }
     public string Description { get; private set; }
     public string ImagePath { get; private set; }
     
@@ -57,8 +62,8 @@ public class Recipe : Entity
     public void Update(
         string name, 
         string description, 
-        uint timeToCook, 
-        uint countPersons,
+        int timeToCook, 
+        int countPersons,
         string imagePath,
         List<Ingredient>? ingredients = null,
         List<Step>? steps = null,
