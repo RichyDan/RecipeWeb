@@ -1,52 +1,13 @@
 using RecipeWeb.Domain.Common;
-namespace RecipeWeb.Domain.Useraggrigate
+namespace RecipeWeb.Domain.UserAggregate
 {
     public class User : Entity
     {
-        private readonly List<UserLike> _likedRecipes = new();
-        private readonly List<UserFavorite> _favoriteRecipes = new();
+        private readonly List<UserLike> _likedRecipes = [];
+        private readonly List<UserFavorite> _favoriteRecipes = [];
 
-        public User (
-            string firstName,
-            string login,
-            string password,
-            string description)
-        {
-            Validate(firstName, login, password);
-
-            Id = Guid.NewGuid();
-            FirstName = firstName;
-            Login = login;
-            Password = password;
-            Description = description;
-        }
-    
-        public string FirstName { get; private set; }
-        public string Login { get; private set; }
-        public string Password { get; private set; }
-        public string Description { get; private set; }
-
-        public IReadOnlyCollection<UserLike> LikedRecipes => _likedRecipes.AsReadOnly();
-        public IReadOnlyCollection<UserFavorite> FavoriteRecipes => _favoriteRecipes.AsReadOnly();
-    
-        public void Update(
-            string firstName, 
-            string login, 
-            string password, 
-            string description)
-        {
-            Validate(firstName, login, password);
-        
-            FirstName = firstName;
-            Login = login;
-            Password = password;
-            Description = description;
-        }
-    
         private void Validate(string firstName, string login, string password)
         {
-            ClearErrors();
-        
             if (string.IsNullOrWhiteSpace(firstName))
                 AddError(nameof(FirstName), "Имя не может быть пустым");
 
@@ -57,16 +18,52 @@ namespace RecipeWeb.Domain.Useraggrigate
 
             if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
                 AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
-        
+
             // вызов единого метода для вывода ошибок валидации
             EnsureValid();
         }
-    
+
+        public User(
+            string firstName,
+            string login,
+            string password,
+            string description)
+        {
+            Validate(firstName, login, password);
+
+            FirstName = firstName;
+            Login = login;
+            Password = password;
+            Description = description;
+        }
+
+        public string FirstName { get; private set; }
+        public string Login { get; private set; }
+        public string Password { get; private set; }
+        public string Description { get; private set; }
+
+        public IReadOnlyCollection<UserLike> LikedRecipes => _likedRecipes.AsReadOnly();
+        public IReadOnlyCollection<UserFavorite> FavoriteRecipes => _favoriteRecipes.AsReadOnly();
+
+        public void Update(
+            string firstName,
+            string login,
+            string password,
+            string description)
+        {
+            Validate(firstName, login, password);
+
+            FirstName = firstName;
+            Login = login;
+            Password = password;
+            Description = description;
+        }
+
         public void AddLike(Guid recipeId)
         {
             if (!_likedRecipes.Any(l => l.RecipeId == recipeId))
             {
-                _likedRecipes.Add(new UserLike(this.Id, recipeId));
+                _likedRecipes.Add(new UserLike(Id, recipeId));
             }
         }
 
@@ -83,7 +80,7 @@ namespace RecipeWeb.Domain.Useraggrigate
         {
             if (!_favoriteRecipes.Any(f => f.RecipeId != recipeId))
             {
-                _favoriteRecipes.Add(new UserFavorite(this.Id, recipeId));
+                _favoriteRecipes.Add(new UserFavorite(Id, recipeId));
             }
         }
 

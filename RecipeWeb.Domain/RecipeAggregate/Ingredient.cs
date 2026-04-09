@@ -1,29 +1,31 @@
 using RecipeWeb.Domain.Common;
 
-namespace RecipeWeb.Domain.Recipeaggrigate
+namespace RecipeWeb.Domain.RecipeAggregate
 {
     public class Ingredient : Entity
     {
         private readonly List<string> _products = [];
-        public Ingredient(
-            string name,
-            IEnumerable<string>? products)
+        public IReadOnlyCollection<string> Products => _products.AsReadOnly();
+        public string Name { get; private set; } = null!;
+
+        public Ingredient(string name, IEnumerable<string> products) => Update(name, products);
+
+        public void Update(string name, IEnumerable<string> products)
         {
-            // validation
             ClearErrors();
+
             if (string.IsNullOrWhiteSpace(name))
-                AddError(nameof(name), "Название ингредиента не может быть пустым");
+                AddError(nameof(Name), "Название ингредиента не может быть пустым");
+
+            if (products == null)
+                AddError(nameof(_products), "Список продуктов не может быть пустым");
+
             EnsureValid();
 
             Name = name;
-
-            if (products != null)
-            {
-                _products.AddRange(products);
-            }
+            _products.Clear();
+            _products.AddRange(products);
         }
-        public IReadOnlyCollection<string> Products => _products.AsReadOnly();
-        public string Name { get; private set; }
 
         public void AddProduct(string product)
         {
