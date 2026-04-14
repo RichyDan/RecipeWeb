@@ -6,23 +6,6 @@ namespace RecipeWeb.Domain.UserAggregate
         private readonly List<UserLike> _likedRecipes = [];
         private readonly List<UserFavorite> _favoriteRecipes = [];
 
-        private void Validate(string firstName, string login, string password)
-        {
-            if (string.IsNullOrWhiteSpace(firstName))
-                AddError(nameof(FirstName), "Имя не может быть пустым");
-
-            if (string.IsNullOrWhiteSpace(login))
-                AddError(nameof(login), "Логин не может быть пустым");
-            else if (login.Length < 3)
-                AddError(nameof(login), "Логин слишком короткий. Логин должен содержать минимум 3 символа");
-
-            if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
-                AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
-
-            // вызов единого метода для вывода ошибок валидации
-            EnsureValid();
-        }
-
         public User(
             string firstName,
             string login,
@@ -91,6 +74,23 @@ namespace RecipeWeb.Domain.UserAggregate
             {
                 _favoriteRecipes.Remove(favorite);
             }
+        }
+
+        private void Validate(string firstName, string login, string password)
+        {
+            if (string.IsNullOrWhiteSpace(firstName))
+                AddError(nameof(FirstName), "Имя не может быть пустым");
+
+            if (string.IsNullOrWhiteSpace(login))
+                AddError(nameof(login), "Логин не может быть пустым");
+            else if (login.Length < 3)
+                AddError(nameof(login), "Логин слишком короткий. Логин должен содержать минимум 3 символа");
+
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
+                AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
+
+            // вызов единого метода для вывода ошибок валидации
+            EnsureValid();
         }
     }
 }

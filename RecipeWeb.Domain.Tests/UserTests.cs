@@ -27,7 +27,11 @@ namespace RecipeWeb.Domain.Tests
             string description = "Люблю готовить";
 
             // Act
-            User user = new User(firstName, login, password, description);
+            User user = new User(
+                firstName,
+                login,
+                password,
+                description);
 
             // Assert
             user.Id.Should().Be(Guid.Empty);
@@ -132,7 +136,11 @@ namespace RecipeWeb.Domain.Tests
             user.AddLike(recipeId);
 
             // Act
-            user.Update("NewName", "NewLogin", "NewPassword", "NewDescription");
+            user.Update(
+                "NewName",
+                "NewLogin",
+                "NewPassword",
+                "NewDescription");
 
             // Assert
             user.Id.Should().Be(userId);
@@ -147,9 +155,10 @@ namespace RecipeWeb.Domain.Tests
         }
 
         // Вспомогательный метод для быстрого создания пользователя
-        private User CreateValidUser()
-        {
-            return new User("TestUser", "test_login", "12345678", "Description");
-        }
+        private User CreateValidUser() => new User(
+            "TestUser",
+            "test_login",
+            "12345678",
+            "Description");
     }
 }

@@ -34,5 +34,5 @@ namespace RecipeWeb.Domain.Common
         protected void ClearErrors() => _errors.Clear();
     }
 
-    public record ValidationError(string Property, string Message);
 }
+public record ValidationError(string Property, string Message);

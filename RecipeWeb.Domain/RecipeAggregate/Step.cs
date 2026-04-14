@@ -10,14 +10,19 @@ namespace RecipeWeb.Domain.RecipeAggregate
 
         public void Update(string instructions)
         {
-            ClearErrors();
-
             if (string.IsNullOrWhiteSpace(instructions))
                 AddError(nameof(Instructions), "Инструкции не могут быть пустыми");
 
             EnsureValid();
 
             Instructions = instructions;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Step other)
+                return false;
+            return Instructions == other.Instructions;
         }
     }
 }

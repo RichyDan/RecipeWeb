@@ -9,12 +9,18 @@ namespace RecipeWeb.Domain.RecipeAggregate
 
         public void Update(string name)
         {
-            ClearErrors();
             if (string.IsNullOrWhiteSpace(name))
                 AddError(nameof(Name), "Название тега не может быть пустым");
             EnsureValid();
 
             Name = name;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Tag other)
+                return false;
+            return Name == other.Name;
         }
     }
 }

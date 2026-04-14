@@ -39,6 +39,12 @@ namespace RecipeWeb.Domain.RecipeAggregate
                 _products.Add(product);
             }
         }
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Ingredient other)
+                return false;
+            return Name == other.Name && Products.SequenceEqual(other.Products);
+        }
 
         public void RemoveProduct(string product) => _products.Remove(product);
     }
