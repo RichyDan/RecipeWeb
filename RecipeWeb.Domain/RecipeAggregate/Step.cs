@@ -18,11 +18,20 @@ namespace RecipeWeb.Domain.RecipeAggregate
             Instructions = instructions;
         }
 
-        public override bool Equals(object? obj)
+        public bool Equals(Step? other)
         {
-            if (obj is not Step other)
-                return false;
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+
             return Instructions == other.Instructions;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Step other) return false;
+            return Equals(other);
+        }
+
+        public override int GetHashCode() => Instructions?.GetHashCode() ?? 0;
     }
 }

@@ -1,3 +1,4 @@
+using Recipe.Lib;
 using RecipeWeb.Domain.Common;
 
 namespace RecipeWeb.Domain.RecipeAggregate
@@ -56,9 +57,9 @@ namespace RecipeWeb.Domain.RecipeAggregate
             int timeToCook,
             int countPersons,
             string imagePath,
-            List<Ingredient>? ingredients = null,
-            List<Step>? steps = null,
-            List<Tag>? tags = null)
+            IEnumerable<Ingredient>? ingredients = null,
+            IEnumerable<Step>? steps = null,
+            IEnumerable<Tag>? tags = null)
         {
             Validate(
                 name,
@@ -73,28 +74,9 @@ namespace RecipeWeb.Domain.RecipeAggregate
             CountPersons = countPersons;
             ImagePath = imagePath;
 
-            SynchronizeByContent(_ingredients, ingredients);
-            SynchronizeByContent(_steps, steps);
-            SynchronizeByContent(_tags, tags);
-        }
-
-        private void SynchronizeByContent<T>(
-            List<T> internalList,
-            IEnumerable<T> newList)
-            where T : class
-        {
-            if (newList == null)
-                return;
-
-            // Удаляем элементы, которых нет в новом списке (сравнение через Equals)
-            internalList.RemoveAll(item => !newList.Contains(item));
-
-            // Добавляем те, которых еще нет во внутреннем списке
-            foreach (T newItem in newList)
-            {
-                if (!internalList.Contains(newItem))
-                    internalList.Add(newItem);
-            }
+            _ingredients.SynchronizeByContent(ingredients);
+            _steps.SynchronizeByContent(steps);
+            _tags.SynchronizeByContent(tags);
         }
 
         private void Validate(

@@ -16,11 +16,21 @@ namespace RecipeWeb.Domain.RecipeAggregate
             Name = name;
         }
 
-        public override bool Equals(object? obj)
+        public bool Equals(Tag? other)
         {
-            if (obj is not Tag other)
-                return false;
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+
             return Name == other.Name;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Tag other) return false;
+            return Equals(other);
+        }
+
+        public override int GetHashCode() => Name?.GetHashCode() ?? 0;
+
     }
 }

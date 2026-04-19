@@ -1,7 +1,6 @@
 using FluentAssertions;
-using RecipeWeb.Domain.RecipeAggregate;
 
-namespace RecipeWeb.Domain.Tests
+namespace RecipeWeb.Domain.RecipeAggregate.Tests
 {
     public class RecipeTests
     {
