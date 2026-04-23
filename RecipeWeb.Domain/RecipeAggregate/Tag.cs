@@ -5,6 +5,7 @@ namespace RecipeWeb.Domain.RecipeAggregate
     public class Tag : Entity
     {
         public Tag(string name) => Update(name);
+
         public string Name { get; private set; }
 
         public void Update(string name)
@@ -31,6 +32,5 @@ namespace RecipeWeb.Domain.RecipeAggregate
         }
 
         public override int GetHashCode() => Name?.GetHashCode() ?? 0;
-
     }
 }

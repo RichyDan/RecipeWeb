@@ -4,9 +4,9 @@ namespace RecipeWeb.Domain.RecipeAggregate
 {
     public class Step : Entity
     {
-        public string Instructions { get; private set; }
-
         public Step(string instructions) => Update(instructions);
+
+        public string Instructions { get; private set; }
 
         public void Update(string instructions)
         {
