@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Recipe.Lib
+namespace RecipeWeb.Lib
 {
     public static class CollectionExtensions
     {

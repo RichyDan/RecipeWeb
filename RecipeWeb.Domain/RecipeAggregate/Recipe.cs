@@ -1,5 +1,5 @@
-using Recipe.Lib;
 using RecipeWeb.Domain.Common;
+using RecipeWeb.Lib;
 
 namespace RecipeWeb.Domain.RecipeAggregate
 {
