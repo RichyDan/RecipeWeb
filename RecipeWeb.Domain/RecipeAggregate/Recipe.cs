@@ -32,10 +32,6 @@ namespace RecipeWeb.Domain.RecipeAggregate
             CountPersons = countPersons;
             ImagePath = imagePath;
 
-            _ingredients = [];
-            _steps = [];
-            _tags = [];
-
             _ingredients.AddRange(ingredients);
             _steps.AddRange(steps);
             _tags.AddRange(tags ?? []);
@@ -50,6 +46,7 @@ namespace RecipeWeb.Domain.RecipeAggregate
         public IReadOnlyCollection<Ingredient> Ingredients => _ingredients.AsReadOnly();
         public IReadOnlyCollection<Step> Steps => _steps.AsReadOnly();
         public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+
         public void Update(
             string name,
             string description,
