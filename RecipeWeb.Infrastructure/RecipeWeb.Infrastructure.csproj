@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RecipeWeb.Application\RecipeWeb.Application.csproj" />
     <ProjectReference Include="..\RecipeWeb.Domain\RecipeWeb.Domain.csproj" />
   </ItemGroup>
 

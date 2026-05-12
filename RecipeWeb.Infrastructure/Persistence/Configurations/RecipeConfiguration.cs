@@ -4,7 +4,7 @@ using RecipeWeb.Domain.RecipeAggregate;
 
 namespace RecipeWeb.Infrastructure.Persistence.Configurations
 {
-    internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
+    public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
     {
         public void Configure(EntityTypeBuilder<Recipe> builder)
         {
