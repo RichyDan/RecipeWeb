@@ -2,22 +2,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecipeWeb.Domain.RecipeAggregate;
 
-namespace RecipeWeb.Infrastructure.Persistence.Configurations
+namespace RecipeWeb.Infrastructure.Persistence.Configurations;
+
+public class StepConfiguration : IEntityTypeConfiguration<Step>
 {
-    public class StepConfiguration : IEntityTypeConfiguration<Step>
+    public void Configure(EntityTypeBuilder<Step> builder)
     {
-        public void Configure(EntityTypeBuilder<Step> builder)
-        {
-            builder.HasKey(s => s.Id);
+        builder.HasKey(s => s.Id);
 
-            builder.Property(s => s.Instructions)
-                   .IsRequired()
-                   .HasMaxLength(5000);
+        builder.Property(s => s.Instructions)
+               .IsRequired()
+               .HasMaxLength(5000);
 
-            builder.HasOne<Recipe>()
-                   .WithMany(r => r.Steps)
-                   .HasForeignKey("RecipeId")
-                   .OnDelete(DeleteBehavior.Cascade);
-        }
+        builder.HasOne<Recipe>()
+               .WithMany(r => r.Steps)
+               .HasForeignKey("RecipeId")
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }

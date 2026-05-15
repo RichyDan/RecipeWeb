@@ -3,46 +3,53 @@ using RecipeWeb.Domain.RecipeAggregate;
 using RecipeWeb.Domain.UserAggregate;
 using RecipeWeb.Infrastructure.Persistence;
 
-namespace RecipeWeb.Infrastructure.Repositories
+namespace RecipeWeb.Infrastructure.Repositories;
+
+public class UserRepository(RecipeDbContext context) : IUserRepository
 {
-    public class UserRepository : IUserRepository
+    public async Task<User> GetByIdAsync(Guid id)
     {
-        private readonly RecipeDbContext _context;
+        return await AddIncludes(context.Users)
+            .SingleOrDefaultAsync(u => u.Id == id);
+    }
 
-        public UserRepository(RecipeDbContext context) => _context = context;
+    public async Task<User> FindByFirstNameAsync(string firstname)
+    {
+        return await AddIncludes(context.Users)
+            .SingleOrDefaultAsync(u => u.FirstName == firstname);
+    }
 
-        public async Task<User> GetByIdAsync(Guid id)
-        {
-            return await _context.Users
-                .Include(u => u.FavoriteRecipes)
-                .Include(u => u.LikedRecipes)
-                .FirstOrDefaultAsync(u => u.Id == id);
-        }
+    public async Task<User> FindByLoginAsync(string login)
+    {
+        return await AddIncludes(context.Users)
+            .SingleOrDefaultAsync(u => u.Login == login);
+    }
 
-        public async Task<User> FindByFirstNameAsync(string firstname)
-        {
-            return await _context.Users
-                .Include(u => u.LikedRecipes)
-                .Include(u => u.FavoriteRecipes)
-                .FirstOrDefaultAsync(u => u.FirstName == firstname);
-        }
+    public async Task AddAsync(User user)
+    {
+        await context.Users.AddAsync(user);
+    }
 
-        public async Task<User> FindByLoginAsync(string login)
-        {
-            return await _context.Users
-                .Include(u => u.LikedRecipes)
-                .Include(u => u.FavoriteRecipes)
-                .FirstOrDefaultAsync(u => u.Login == login);
-        }
+    public Task UpdateAsync(User user)
+    {
+        context.Users.Update(user);
 
-        public async Task AddAsync(User user)
-        {
-            await _context.Users.AddAsync(user);
-        }
-        public Task DeleteAsync(User user)
-        {
-            _context.Users.Remove(user);
-            return Task.CompletedTask;
-        }
+        // Не вызываем SaveChanges, это сделает UoW
+        return Task.CompletedTask;
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        await context.Users
+            .Where(r => r.Id == id)
+            .ExecuteDeleteAsync();
+
+    }
+
+    private IQueryable<User> AddIncludes(IQueryable<User> query)
+    {
+        return query
+            .Include(u => u.LikedRecipes)
+            .Include(u => u.FavoriteRecipes);
     }
 }

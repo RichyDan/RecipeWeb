@@ -2,43 +2,47 @@ using Microsoft.EntityFrameworkCore;
 using RecipeWeb.Domain.RecipeAggregate;
 using RecipeWeb.Infrastructure.Persistence;
 
-namespace RecipeWeb.Infrastructure.Repositories
+namespace RecipeWeb.Infrastructure.Repositories;
+
+public class RecipeRepository(RecipeDbContext context) : IRecipeRepository
 {
-    public class RecipeRepository : IRecipeRepository
+    public async Task<Recipe> GetByIdAsync(Guid id)
     {
-        private readonly RecipeDbContext _context;
+        return await AddIncludes(context.Recipes)
+            .SingleOrDefaultAsync(r => r.Id == id);
+    }
 
-        public RecipeRepository(RecipeDbContext context) => _context = context;
+    public async Task<IEnumerable<Recipe>> GetAllAsync()
+    {
+        return await AddIncludes(context.Recipes)
+            .ToListAsync();
+    }
 
-        public async Task<Recipe> GetByIdAsync(Guid id)
-        {
-            return await _context.Recipes
-                .Include(r => r.Ingredients)
-                .Include(r => r.Steps)
-                .Include(r => r.Tags)
-                .FirstOrDefaultAsync(r => r.Id == id);
-        }
+    public async Task AddAsync(Recipe recipe)
+    {
+        await context.Recipes.AddAsync(recipe);
+    }
 
-        public async Task<IEnumerable<Recipe>> GetAllAsync()
-        {
-            return await _context.Recipes
-                .Include(r => r.Ingredients)
-                .Include(r => r.Steps)
-                .Include(r => r.Tags)
-                .ToListAsync();
-        }
+    public Task UpdateAsync(Recipe recipe)
+    {
+        context.Recipes.Update(recipe);
 
-        public async Task AddAsync(Recipe recipe)
-        {
-            await _context.Recipes.AddAsync(recipe);
-        }
+        // Не вызываем SaveChanges, это сделает UoW
+        return Task.CompletedTask;
+    }
 
-        public Task DeleteAsync(Guid id)
-        {
-            var recipe = _context.Recipes.FirstOrDefault(r => r.Id == id);
-            if (recipe != null)
-                _context.Recipes.Remove(recipe);
-            return Task.CompletedTask;
-        }
+    public async Task DeleteAsync(Guid id)
+    {
+        await context.Recipes
+            .Where(r => r.Id == id)
+            .ExecuteDeleteAsync();
+    }
+
+    private IQueryable<Recipe> AddIncludes(IQueryable<Recipe> query)
+    {
+        return query
+            .Include(r => r.Ingredients)
+            .Include(r => r.Steps)
+            .Include(r => r.Tags);
     }
 }
