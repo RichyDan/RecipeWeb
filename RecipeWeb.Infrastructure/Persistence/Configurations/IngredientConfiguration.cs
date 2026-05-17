@@ -16,7 +16,7 @@ public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
 
         builder.PrimitiveCollection(i => i.Products)
                .ElementType()
-               .HasMaxLength(200)
+               .HasMaxLength(5000)
                .IsRequired();
 
         builder.HasOne<Recipe>()

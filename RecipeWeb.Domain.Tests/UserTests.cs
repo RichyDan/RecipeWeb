@@ -2,7 +2,6 @@ using System.Reflection;
 using FluentAssertions;
 using RecipeWeb.Domain.Common;
 using RecipeWeb.Domain.UserAggregate;
-using Guid = System.Guid;
 
 namespace RecipeWeb.Domain.RecipeAggregate.Tests;
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecipeWeb.Domain.RecipeAggregate;
+using RecipeWeb.Domain.UserAggregate;
 
 namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
@@ -31,5 +32,10 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder.HasMany(r => r.Tags)
                .WithMany()
                .UsingEntity(j => j.ToTable("RecipeTags"));
+
+        builder.HasOne<User>()
+               .WithMany()
+               .HasForeignKey(r => r.AuthorId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

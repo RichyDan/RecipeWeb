@@ -6,6 +6,6 @@ public interface IUserRepository
     Task<User> FindByFirstNameAsync(string firstname);
     Task<User> FindByLoginAsync(string login);
     Task AddAsync(User user);
-    Task UpdateAsync(User user);
+    void Update(User user);
     Task DeleteAsync(Guid id);
 }

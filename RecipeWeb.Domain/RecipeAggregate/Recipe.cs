@@ -17,6 +17,7 @@ public class Recipe : Entity
         int timeToCook,
         int countPersons,
         string imagePath,
+        Guid authorId,
         IEnumerable<Ingredient> ingredients,
         IEnumerable<Step> steps,
         IEnumerable<Tag>? tags = null)
@@ -33,6 +34,7 @@ public class Recipe : Entity
         TimeToCook = timeToCook;
         CountPersons = countPersons;
         ImagePath = imagePath;
+        AuthorId = authorId;
 
         _ingredients.AddRange(ingredients);
         _steps.AddRange(steps);
@@ -44,6 +46,8 @@ public class Recipe : Entity
     public int CountPersons { get; private set; }
     public string Description { get; private set; }
     public string ImagePath { get; private set; }
+
+    public Guid AuthorId { get; private set; }  // внешний ключ
 
     public IReadOnlyCollection<Ingredient> Ingredients => _ingredients.AsReadOnly();
     public IReadOnlyCollection<Step> Steps => _steps.AsReadOnly();
