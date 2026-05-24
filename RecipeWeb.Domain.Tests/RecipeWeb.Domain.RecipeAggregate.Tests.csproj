@@ -20,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Recipe.Lib\Recipe.Lib.csproj" />
       <ProjectReference Include="..\RecipeWeb.Domain\RecipeWeb.Domain.csproj" />
     </ItemGroup>
 

@@ -1,37 +1,37 @@
 using RecipeWeb.Domain.Common;
 
-namespace RecipeWeb.Domain.RecipeAggregate
+namespace RecipeWeb.Domain.RecipeAggregate;
+
+public class Step : Entity
 {
-    public class Step : Entity
+    private Step() { }
+    public Step(string instructions) => Update(instructions);
+
+    public string Instructions { get; private set; }
+
+    public void Update(string instructions)
     {
-        public Step(string instructions) => Update(instructions);
+        if (string.IsNullOrWhiteSpace(instructions))
+            AddError(nameof(Instructions), "Инструкции не могут быть пустыми");
 
-        public string Instructions { get; private set; }
+        EnsureValid();
 
-        public void Update(string instructions)
-        {
-            if (string.IsNullOrWhiteSpace(instructions))
-                AddError(nameof(Instructions), "Инструкции не могут быть пустыми");
-
-            EnsureValid();
-
-            Instructions = instructions;
-        }
-
-        public bool Equals(Step? other)
-        {
-            if (other is null) return false;
-            if (ReferenceEquals(this, other)) return true;
-
-            return Instructions == other.Instructions;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is not Step other) return false;
-            return Equals(other);
-        }
-
-        public override int GetHashCode() => Instructions?.GetHashCode() ?? 0;
+        Instructions = instructions;
     }
+
+    public bool Equals(Step? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+
+        return Instructions == other.Instructions;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Step other) return false;
+        return Equals(other);
+    }
+
+    public override int GetHashCode() => Instructions?.GetHashCode() ?? 0;
 }
