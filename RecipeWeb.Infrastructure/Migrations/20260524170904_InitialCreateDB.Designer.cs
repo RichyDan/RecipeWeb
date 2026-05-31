@@ -12,8 +12,8 @@ using RecipeWeb.Infrastructure.Persistence;
 namespace RecipeWeb.Infrastructure.Migrations
 {
     [DbContext(typeof(RecipeDbContext))]
-    [Migration("20260515132408_testMigration1")]
-    partial class testMigration1
+    [Migration("20260524170904_InitialCreateDB")]
+    partial class InitialCreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,9 @@ namespace RecipeWeb.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("CountPersons")
                         .HasColumnType("int");
 
@@ -93,6 +96,8 @@ namespace RecipeWeb.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Recipes");
                 });
@@ -219,6 +224,15 @@ namespace RecipeWeb.Infrastructure.Migrations
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RecipeWeb.Domain.RecipeAggregate.Recipe", b =>
+                {
+                    b.HasOne("RecipeWeb.Domain.UserAggregate.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RecipeWeb.Domain.RecipeAggregate.Step", b =>
