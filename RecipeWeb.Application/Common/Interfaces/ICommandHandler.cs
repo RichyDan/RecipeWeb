@@ -1,7 +1,8 @@
+using MediatR;
+
 namespace RecipeWeb.Application.Common.Interfaces;
 
-public interface ICommandHandler<in TCommand>
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand
 {
-    Task Handle(TCommand command, CancellationToken cancellationToken = default);
 }

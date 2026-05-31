@@ -1,5 +1,7 @@
+using MediatR;
+
 namespace RecipeWeb.Application.Common.Interfaces;
 
-public interface IQuery<TResult>
+public interface IQuery<out TResult> : IRequest<TResult>
 {
 }

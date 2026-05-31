@@ -1,5 +1,7 @@
+using MediatR;
+
 namespace RecipeWeb.Application.Common.Interfaces;
 
-public interface ICommand
+public interface ICommand : IRequest
 {
 }
