@@ -1,10 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using RecipeWeb.Application.Common.Interfaces;
 using RecipeWeb.Infrastructure.Persistence;
+using RecipeWeb.WebAPI.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(ICommand).Assembly);
 
+    // Регистрируем TransactionBehavior как открытый дженерик
+    cfg.AddOpenBehavior(typeof(TransactionBehavior<,>));
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
