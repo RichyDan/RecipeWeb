@@ -12,7 +12,7 @@ public class TransactionBehavior<TCommand, TResponse>(IUnitOfWork unitOfWork) : 
         CancellationToken cancellationToken)
     {
         // Выполняем команду
-        var response = await next(cancellationToken);
+        TResponse? response = await next(cancellationToken);
 
         // Сохраняем изменения
         await unitOfWork.SaveChangesAsync(cancellationToken);
