@@ -7,10 +7,10 @@ public class UpdateUserCommandHandler(IUserRepository userRepository) : ICommand
 {
     public async Task Handle(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(command.UserId)
+        User user = await userRepository.GetByIdAsync(command.UserId)
             ?? throw new KeyNotFoundException($"Пользователь с Id {command.UserId} не найден");
 
-        var existingByLogin = await userRepository.FindByLoginAsync(command.Login);
+        User existingByLogin = await userRepository.FindByLoginAsync(command.Login);
         if (existingByLogin != null && existingByLogin.Id != command.UserId)
             throw new InvalidOperationException($"Логин '{command.Login}' уже занят");
 

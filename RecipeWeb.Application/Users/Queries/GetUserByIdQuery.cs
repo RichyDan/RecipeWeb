@@ -3,7 +3,4 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.Application.Users.Queries;
 
-public class GetUserByIdQuery : IQuery<UserDto?>
-{
-    public Guid UserId { get; set; }
-}
+public record GetUserByIdQuery(Guid UserId) : IQuery<UserDto?>;

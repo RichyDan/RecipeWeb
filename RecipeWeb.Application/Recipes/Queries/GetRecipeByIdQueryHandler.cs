@@ -13,27 +13,17 @@ public class GetRecipeByIdQueryHandler(IRecipeRepository recipeRepository) : IQu
         return recipe is null ? null : MapToDto(recipe);
     }
 
-    private static RecipeDto MapToDto(Recipe recipe) => new()
-    {
-        Id = recipe.Id,
-        Name = recipe.Name,
-        Description = recipe.Description,
-        TimeToCook = recipe.TimeToCook,
-        CountPersons = recipe.CountPersons,
-        ImagePath = recipe.ImagePath,
-        AuthorId = recipe.AuthorId,
-        Ingredients = recipe.Ingredients.Select(i => new IngredientDto
-        {
-            Name = i.Name,
-            Products = i.Products.ToList()
-        }).ToList(),
-        Steps = recipe.Steps.Select(s => new StepDto
-        {
-            Instructions = s.Instructions
-        }).ToList(),
-        Tags = recipe.Tags.Select(t => new TagDto
-        {
-            Name = t.Name
-        }).ToList()
-    };
+    private static RecipeDto MapToDto(Recipe recipe) => 
+        new(
+            recipe.Id,
+            recipe.Name,
+            recipe.Description,
+            recipe.TimeToCook,
+            recipe.CountPersons,
+            recipe.ImagePath,
+            recipe.AuthorId,
+            recipe.Ingredients.Select(i => new IngredientDto(i.Name, i.Products.ToList())).ToList(),
+            recipe.Steps.Select(s => new StepDto(s.Instructions)).ToList(),
+            recipe.Tags.Select(t => new TagDto(t.Name)).ToList()
+        );
 }

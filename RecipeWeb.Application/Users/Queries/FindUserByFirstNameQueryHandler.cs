@@ -13,13 +13,13 @@ public class FindUserByFirstNameQueryHandler(IUserRepository userRepository) : I
         return user is null ? null : MapToDto(user);
     }
 
-    private static UserDto MapToDto(User user) => new()
-    {
-        Id = user.Id,
-        FirstName = user.FirstName,
-        Login = user.Login,
-        Description = user.Description,
-        LikedRecipeIds = user.LikedRecipes.Select(l => l.RecipeId).ToList(),
-        FavoriteRecipeIds = user.FavoriteRecipes.Select(f => f.RecipeId).ToList()
-    };
+    private static UserDto MapToDto(User user) =>
+        new(
+            user.Id,
+            user.FirstName,
+            user.Login,
+            user.Description,
+            user.LikedRecipes.Select(l => l.RecipeId).ToList(),
+            user.FavoriteRecipes.Select(f => f.RecipeId).ToList()
+        );
 }

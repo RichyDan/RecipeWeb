@@ -3,6 +3,4 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.Application.Recipes.Queries;
 
-public class GetAllRecipesQuery : IQuery<List<RecipeDto>>
-{
-}
+public record GetAllRecipesQuery : IQuery<List<RecipeDto>>;
