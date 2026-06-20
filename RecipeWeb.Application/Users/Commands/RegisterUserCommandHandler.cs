@@ -3,18 +3,19 @@ using RecipeWeb.Domain.UserAggregate;
 
 namespace RecipeWeb.Application.Users.Commands;
 
-public class RegisterUserCommandHandler(IUserRepository userRepository) : ICommandHandler<RegisterUserCommand>
+public class RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : ICommandHandler<RegisterUserCommand>
 {
     public async Task Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        var existing = await userRepository.FindByLoginAsync(command.Login);
+        User existing = await userRepository.FindByLoginAsync(command.Login);
+
         if (existing != null)
             throw new InvalidOperationException($"Пользователь с логином '{command.Login}' уже существует");
 
         var user = new User(
             command.FirstName,
             command.Login,
-            command.Password,
+            passwordHasher.Hash(command.Password),
             command.Description);
 
         await userRepository.AddAsync(user);

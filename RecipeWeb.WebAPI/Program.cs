@@ -11,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(ICommand).Assembly);
-
-    // Регистрируем TransactionBehavior как открытый дженерик
+    cfg.RegisterServicesFromAssembly(typeof(ICommand).Assembly);           // Application
+    cfg.RegisterServicesFromAssembly(typeof(RecipeDbContext).Assembly);   // Infrastructure
     cfg.AddOpenBehavior(typeof(TransactionBehavior<,>));
 });
 builder.Services.AddControllers();

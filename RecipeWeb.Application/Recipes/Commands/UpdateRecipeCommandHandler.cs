@@ -7,7 +7,8 @@ public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository) : IC
 {
     public async Task Handle(UpdateRecipeCommand command, CancellationToken cancellationToken)
     {
-        Recipe recipe = await recipeRepository.GetByIdAsync(command.RecipeId) ?? throw new KeyNotFoundException($"Рецепт с Id {command.RecipeId} не найден");
+        Recipe recipe = await recipeRepository.GetByIdAsync(command.RecipeId) ??
+            throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
 
         var ingredients = command.Ingredients?
             .Select(i => new Ingredient(i.Name, i.Products))
