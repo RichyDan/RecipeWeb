@@ -8,10 +8,10 @@ public class UnlikeRecipeCommandHandler(IUserRepository userRepository, IRecipeR
 {
     public async Task Handle(UnlikeRecipeCommand command, CancellationToken cancellationToken)
     {
-        User user = await userRepository.GetByIdAsync(command.UserId)
+        User user = await userRepository.GetByIdAsync(command.UserId, cancellationToken)
             ?? throw new InvalidOperationException($"Пользователь с Id {command.UserId} не найден");
 
-        if (await recipeRepository.GetByIdAsync(command.RecipeId) is null)
+        if (await recipeRepository.GetByIdAsync(command.RecipeId, cancellationToken) is null)
             throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
 
         user.RemoveLike(command.RecipeId);

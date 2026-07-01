@@ -30,6 +30,6 @@ public class CreateRecipeCommandHandler(IRecipeRepository recipeRepository) : IC
             steps,
             tags);
 
-        await recipeRepository.AddAsync(recipe);
+        await recipeRepository.AddAsync(recipe, cancellationToken);
     }
 }

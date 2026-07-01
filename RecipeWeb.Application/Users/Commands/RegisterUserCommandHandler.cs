@@ -7,7 +7,7 @@ public class RegisterUserCommandHandler(IUserRepository userRepository, IPasswor
 {
     public async Task Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        User existing = await userRepository.FindByLoginAsync(command.Login);
+        User existing = await userRepository.FindByLoginAsync(command.Login, cancellationToken);
 
         if (existing != null)
             throw new InvalidOperationException($"Пользователь с логином '{command.Login}' уже существует");
@@ -18,6 +18,6 @@ public class RegisterUserCommandHandler(IUserRepository userRepository, IPasswor
             passwordHasher.Hash(command.Password),
             command.Description);
 
-        await userRepository.AddAsync(user);
+        await userRepository.AddAsync(user, cancellationToken);
     }
 }
