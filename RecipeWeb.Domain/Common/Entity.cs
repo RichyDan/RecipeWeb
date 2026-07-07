@@ -3,36 +3,36 @@ namespace RecipeWeb.Domain.Common;
 public abstract class Entity
 {
     // Список для хранения ошибок валидации
-    private readonly List<ValidationError> errors = [];
-
+    private readonly List<ValidationError> _errors = [];
     public Guid Id { get; protected set; }
 
     // Свойство для получения списка ошибок
-    public IReadOnlyCollection<ValidationError> Errors => this.errors.AsReadOnly();
+    public IReadOnlyCollection<ValidationError> Errors => _errors.AsReadOnly();
 
     // Проверка, есть ли ошибки
-    public bool IsValid => this.errors.Count == 0;
+    public bool IsValid => !_errors.Any();
 
     // Метод для добавления ошибки
     protected void AddError(string propertyName, string errorMessage) =>
-        this.errors.Add(new ValidationError(propertyName, errorMessage));
+        _errors.Add(new ValidationError(propertyName, errorMessage));
 
     // Метод для вывода ошибок в едином виде
     public void EnsureValid()
     {
-        if (!this.IsValid)
+        if (!IsValid)
         {
-            IEnumerable<string> errorMessages = this.errors.Select(e => $"[{e.property}]: {e.message}");
+            var errorMessages = _errors.Select(e => $"[{e.Property}]: {e.Message}");
             var summary = string.Join("; ", errorMessages);
 
             // Очищаем ошибки после выброса исключения
-            this.errors.Clear();
+            _errors.Clear();
 
-            throw new InvalidOperationException($"Валидация сущности {this.GetType().Name} не пройдена: {summary}");
+            throw new InvalidOperationException($"Валидация сущности {GetType().Name} не пройдена: {summary}");
         }
     }
 
-    protected void ClearErrors() => this.errors.Clear();
+    protected void ClearErrors() => _errors.Clear();
 }
 
-public record ValidationError(string property, string message);
+
+public record ValidationError(string Property, string Message);

@@ -6,17 +6,14 @@ namespace RecipeWeb.Application.Users.Commands;
 
 public class RemoveFromFavoritesCommandHandler(IUserRepository userRepository, IRecipeRepository recipeRepository) : ICommandHandler<RemoveFromFavoritesCommand>
 {
-    /// <inheritdoc/>
     public async Task Handle(RemoveFromFavoritesCommand command, CancellationToken cancellationToken)
     {
-        User user = await userRepository.GetByIdAsync(command.userId, cancellationToken)
-            ?? throw new InvalidOperationException($"Пользователь с Id {command.userId} не найден");
+        User user = await userRepository.GetByIdAsync(command.UserId, cancellationToken)
+            ?? throw new InvalidOperationException($"Пользователь с Id {command.UserId} не найден");
 
-        if (await recipeRepository.GetByIdAsync(command.recipeId, cancellationToken) is null)
-        {
-            throw new InvalidOperationException($"Рецепт с Id {command.recipeId} не найден");
-        }
+        if (await recipeRepository.GetByIdAsync(command.RecipeId, cancellationToken) is null)
+            throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
 
-        user.RemoveFromFavorites(command.recipeId);
+        user.RemoveFromFavorites(command.RecipeId);
     }
 }

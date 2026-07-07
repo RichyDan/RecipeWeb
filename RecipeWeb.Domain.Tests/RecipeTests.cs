@@ -8,15 +8,16 @@ public class RecipeTests
     private static readonly Guid TestAuthorId = Guid.NewGuid();
 
     // Вспомогательный метод для создания начальных данных
-    private static (List<Ingredient>, List<Step>, List<Tag>) CreateDefaultCollections() => (
-        [new ("Мука", ["Пшеница"])],
-        [new ("Замесить тесто")],
-        [new ("Выпечка")]);
+    private (List<Ingredient>, List<Step>, List<Tag>) CreateDefaultCollections() => (
+        new List<Ingredient> { new Ingredient("Мука", ["Пшеница"]) },
+        new List<Step> { new Step("Замесить тесто") },
+        new List<Tag> { new Tag("Выпечка") }
+    );
 
     [Fact]
-    public void RecipeShouldBeCreatedCorrectly()
+    public void Recipe_Should_BeCreated_Correctly()
     {
-        (List<Ingredient>? ingredients, List<Step>? steps, List<Tag>? tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",
@@ -39,11 +40,11 @@ public class RecipeTests
     }
 
     [Fact]
-    public void RecipeUpdateShouldModifyAllFieldsAndSynchronizeCollections()
+    public void Recipe_Update_Should_ModifyAllFieldsAndSynchronizeCollections()
     {
         // Arrange
-        (List<Ingredient>? initialIngredients, List<Step>? initialSteps, List<Tag>? initialTags) = CreateDefaultCollections();
-        Ingredient initialIngredient = initialIngredients[0];
+        var (initialIngredients, initialSteps, initialTags) = CreateDefaultCollections();
+        var initialIngredient = initialIngredients[0];
 
         var recipe = new Recipe(
             "Борщ",
@@ -58,12 +59,12 @@ public class RecipeTests
 
         var newIngredients = new List<Ingredient>
         {
-            new ("Мука", ["Пшеница"]),
-            new ("Соль", ["Морская"]),
+            new Ingredient("Мука", ["Пшеница"]),
+            new Ingredient("Соль", ["Морская"])
         };
 
-        var newSteps = new List<Step> { new ("Новый шаг") };
-        var newTags = new List<Tag> { new ("Веган") };
+        var newSteps = new List<Step> { new Step("Новый шаг") };
+        var newTags = new List<Tag> { new Tag("Веган") };
 
         // Act
         recipe.Update(
@@ -99,10 +100,10 @@ public class RecipeTests
     }
 
     [Fact]
-    public void RecipeUpdateShouldKeepExistingCollectionsWhenNullIsPassed()
+    public void Recipe_Update_Should_KeepExistingCollections_When_NullIsPassed()
     {
         // Arrange
-        (List<Ingredient>? ingredients, List<Step>? steps, List<Tag>? tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",
@@ -139,7 +140,7 @@ public class RecipeTests
     [InlineData("Название", "Описание", 0, 2, "https://ok.com", "TimeToCook")]
     [InlineData("Название", "Описание", 30, 0, "https://ok.com", "CountPersons")]
     [InlineData("Название", "Описание", 30, 2, "not-a-url", "imageUrl")]
-    public void RecipeShouldThrowExceptionWhenValidationFails(
+    public void Recipe_Should_ThrowException_When_ValidationFails(
         string name,
         string desc,
         int time,

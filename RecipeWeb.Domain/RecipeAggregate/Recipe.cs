@@ -5,13 +5,11 @@ namespace RecipeWeb.Domain.RecipeAggregate;
 
 public class Recipe : Entity
 {
-    private readonly List<Ingredient> ingredients = [];
-    private readonly List<Step> steps = [];
-    private readonly List<Tag> tags = [];
+    private readonly List<Ingredient> _ingredients = [];
+    private readonly List<Step> _steps = [];
+    private readonly List<Tag> _tags = [];
 
-    private Recipe()
-    {
-    }
+    private Recipe() { }
 
     public Recipe(
         string name,
@@ -24,42 +22,36 @@ public class Recipe : Entity
         IEnumerable<Step> steps,
         IEnumerable<Tag>? tags = null)
     {
-        this.Validate(
+        Validate(
             name,
             description,
             timeToCook,
             countPersons,
             imagePath);
 
-        this.Name = name;
-        this.Description = description;
-        this.TimeToCook = timeToCook;
-        this.CountPersons = countPersons;
-        this.ImagePath = imagePath;
-        this.AuthorId = authorId;
+        Name = name;
+        Description = description;
+        TimeToCook = timeToCook;
+        CountPersons = countPersons;
+        ImagePath = imagePath;
+        AuthorId = authorId;
 
-        this.ingredients.AddRange(ingredients);
-        this.steps.AddRange(steps);
-        this.tags.AddRange(tags ?? []);
+        _ingredients.AddRange(ingredients);
+        _steps.AddRange(steps);
+        _tags.AddRange(tags ?? []);
     }
 
     public string Name { get; private set; }
-
     public int TimeToCook { get; private set; }
-
     public int CountPersons { get; private set; }
-
     public string Description { get; private set; }
-
     public string ImagePath { get; private set; }
 
-    public Guid AuthorId { get; private set; } // внешний ключ
+    public Guid AuthorId { get; private set; }  // внешний ключ
 
-    public IReadOnlyCollection<Ingredient> Ingredients => this.ingredients.AsReadOnly();
-
-    public IReadOnlyCollection<Step> Steps => this.steps.AsReadOnly();
-
-    public IReadOnlyCollection<Tag> Tags => this.tags.AsReadOnly();
+    public IReadOnlyCollection<Ingredient> Ingredients => _ingredients.AsReadOnly();
+    public IReadOnlyCollection<Step> Steps => _steps.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
 
     public void Update(
         string name,
@@ -71,22 +63,22 @@ public class Recipe : Entity
         IEnumerable<Step>? steps = null,
         IEnumerable<Tag>? tags = null)
     {
-        this.Validate(
+        Validate(
             name,
             description,
             timeToCook,
             countPersons,
             imagePath);
 
-        this.Name = name;
-        this.Description = description;
-        this.TimeToCook = timeToCook;
-        this.CountPersons = countPersons;
-        this.ImagePath = imagePath;
+        Name = name;
+        Description = description;
+        TimeToCook = timeToCook;
+        CountPersons = countPersons;
+        ImagePath = imagePath;
 
-        this.ingredients.SynchronizeByContent(ingredients);
-        this.steps.SynchronizeByContent(steps);
-        this.tags.SynchronizeByContent(tags);
+        _ingredients.SynchronizeByContent(ingredients);
+        _steps.SynchronizeByContent(steps);
+        _tags.SynchronizeByContent(tags);
     }
 
     private void Validate(
@@ -97,31 +89,21 @@ public class Recipe : Entity
         string? imageUrl)
     {
         if (string.IsNullOrWhiteSpace(name))
-        {
-            this.AddError(nameof(name), "Название рецепта не может быть пустым");
-        }
+            AddError(nameof(name), "Название рецепта не может быть пустым");
 
         if (string.IsNullOrWhiteSpace(description))
-        {
-            this.AddError(nameof(description), "Описание не может быть пустым");
-        }
+            AddError(nameof(description), "Описание не может быть пустым");
 
         if (timeToCook == 0)
-        {
-            this.AddError(nameof(timeToCook), "Время приготовления блюда не может быть равным 0");
-        }
+            AddError(nameof(timeToCook), "Время приготовления блюда не может быть равным 0");
 
         if (countPersons == 0)
-        {
-            this.AddError(nameof(countPersons), "Количество персон должно быть больше 0");
-        }
+            AddError(nameof(countPersons), "Количество персон должно быть больше 0");
 
         if (!string.IsNullOrEmpty(imageUrl) && !Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
-        {
-            this.AddError(nameof(imageUrl), "Некорректный формат URL картинки");
-        }
+            AddError(nameof(imageUrl), "Некорректный формат URL картинки");
 
         // Вызов единого метода вывода ошибок
-        this.EnsureValid();
+        EnsureValid();
     }
 }

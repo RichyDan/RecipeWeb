@@ -5,7 +5,6 @@ namespace RecipeWeb.Application.Users.Commands;
 
 public class DeleteUserCommandHandler(IUserRepository userRepository) : ICommandHandler<DeleteUserCommand>
 {
-    /// <inheritdoc/>
     public async Task Handle(DeleteUserCommand command, CancellationToken cancellationToken) =>
-        await userRepository.DeleteAsync(command.userId, cancellationToken);
+        await userRepository.DeleteAsync(command.UserId, cancellationToken);
 }

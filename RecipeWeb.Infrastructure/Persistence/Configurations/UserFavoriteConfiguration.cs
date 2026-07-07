@@ -7,7 +7,6 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class UserFavoriteConfiguration : IEntityTypeConfiguration<UserFavorite>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<UserFavorite> builder)
     {
         builder.HasKey(uf => new { uf.UserId, uf.RecipeId });
