@@ -1,14 +1,13 @@
 namespace RecipeWeb.Application.Common.DTOs;
 
 public record RecipeDto(
-    Guid Id,
-    string Name,
-    string Description,
-    int TimeToCook,
-    int CountPersons,
-    string ImagePath,
-    Guid AuthorId,
-    List<IngredientDto> Ingredients,
-    List<StepDto> Steps,
-    List<TagDto> Tags
-);
+    Guid id,
+    string name,
+    string description,
+    int timeToCook,
+    int countPersons,
+    string imagePath,
+    Guid authorId,
+    List<IngredientDto> ingredients,
+    List<StepDto> steps,
+    List<TagDto> tags);

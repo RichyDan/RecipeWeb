@@ -6,14 +6,17 @@ namespace RecipeWeb.Application.Users.Commands;
 
 public class AddToFavoritesCommandHandler(IUserRepository userRepository, IRecipeRepository recipeRepository) : ICommandHandler<AddToFavoritesCommand>
 {
+    /// <inheritdoc/>
     public async Task Handle(AddToFavoritesCommand command, CancellationToken cancellationToken)
     {
-        User user = await userRepository.GetByIdAsync(command.UserId, cancellationToken)
-            ?? throw new InvalidOperationException($"Пользователь с Id {command.UserId} не найден");
+        User user = await userRepository.GetByIdAsync(command.userId, cancellationToken)
+            ?? throw new InvalidOperationException($"Пользователь с Id {command.userId} не найден");
 
-        if (await recipeRepository.GetByIdAsync(command.RecipeId, cancellationToken) is null)
-            throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
+        if (await recipeRepository.GetByIdAsync(command.recipeId, cancellationToken) is null)
+        {
+            throw new InvalidOperationException($"Рецепт с Id {command.recipeId} не найден");
+        }
 
-        user.AddToFavorites(command.RecipeId);
+        user.AddToFavorites(command.recipeId);
     }
 }

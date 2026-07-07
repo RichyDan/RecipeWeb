@@ -1,4 +1,4 @@
-﻿namespace RecipeWeb.WebAPI.Controllers;
+namespace RecipeWeb.WebAPI.Controllers;
 
 public class RecipesController
 {

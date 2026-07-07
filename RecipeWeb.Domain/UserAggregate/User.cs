@@ -4,10 +4,12 @@ namespace RecipeWeb.Domain.UserAggregate;
 
 public class User : Entity
 {
-    private readonly List<UserLike> _likedRecipes = [];
-    private readonly List<UserFavorite> _favoriteRecipes = [];
+    private readonly List<UserLike> likedRecipes = [];
+    private readonly List<UserFavorite> favoriteRecipes = [];
 
-    private User() { }
+    private User()
+    {
+    }
 
     public User(
         string firstName,
@@ -15,21 +17,25 @@ public class User : Entity
         string password,
         string description)
     {
-        Validate(firstName, login, password);
+        this.Validate(firstName, login, password);
 
-        FirstName = firstName;
-        Login = login;
-        Password = password;
-        Description = description;
+        this.FirstName = firstName;
+        this.Login = login;
+        this.Password = password;
+        this.Description = description;
     }
 
     public string FirstName { get; private set; }
+
     public string Login { get; private set; }
+
     public string Password { get; private set; }
+
     public string Description { get; private set; }
 
-    public IReadOnlyCollection<UserLike> LikedRecipes => _likedRecipes.AsReadOnly();
-    public IReadOnlyCollection<UserFavorite> FavoriteRecipes => _favoriteRecipes.AsReadOnly();
+    public IReadOnlyCollection<UserLike> LikedRecipes => this.likedRecipes.AsReadOnly();
+
+    public IReadOnlyCollection<UserFavorite> FavoriteRecipes => this.favoriteRecipes.AsReadOnly();
 
     public void Update(
         string firstName,
@@ -37,62 +43,70 @@ public class User : Entity
         string password,
         string description)
     {
-        Validate(firstName, login, password);
+        this.Validate(firstName, login, password);
 
-        FirstName = firstName;
-        Login = login;
-        Password = password;
-        Description = description;
+        this.FirstName = firstName;
+        this.Login = login;
+        this.Password = password;
+        this.Description = description;
     }
 
     public void AddLike(Guid recipeId)
     {
-        if (!_likedRecipes.Any(l => l.RecipeId == recipeId))
+        if (!this.likedRecipes.Any(l => l.RecipeId == recipeId))
         {
-            _likedRecipes.Add(new UserLike(Id, recipeId));
+            this.likedRecipes.Add(new UserLike(this.Id, recipeId));
         }
     }
 
     public void RemoveLike(Guid recipeId)
     {
-        UserLike? like = _likedRecipes.FirstOrDefault(l => l.RecipeId == recipeId);
+        UserLike? like = this.likedRecipes.FirstOrDefault(l => l.RecipeId == recipeId);
         if (like != null)
         {
-            _likedRecipes.Remove(like);
+            this.likedRecipes.Remove(like);
         }
     }
 
     public void AddToFavorites(Guid recipeId)
     {
-        if (!_favoriteRecipes.Any(f => f.RecipeId != recipeId))
+        if (!this.favoriteRecipes.Any(f => f.RecipeId != recipeId))
         {
-            _favoriteRecipes.Add(new UserFavorite(Id, recipeId));
+            this.favoriteRecipes.Add(new UserFavorite(this.Id, recipeId));
         }
     }
 
     public void RemoveFromFavorites(Guid recipeId)
     {
-        UserFavorite? favorite = _favoriteRecipes.FirstOrDefault(f => f.RecipeId == recipeId);
+        UserFavorite? favorite = this.favoriteRecipes.FirstOrDefault(f => f.RecipeId == recipeId);
         if (favorite != null)
         {
-            _favoriteRecipes.Remove(favorite);
+            this.favoriteRecipes.Remove(favorite);
         }
     }
 
     private void Validate(string firstName, string login, string password)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            AddError(nameof(FirstName), "Имя не может быть пустым");
+        {
+            this.AddError(nameof(this.FirstName), "Имя не может быть пустым");
+        }
 
         if (string.IsNullOrWhiteSpace(login))
-            AddError(nameof(login), "Логин не может быть пустым");
+        {
+            this.AddError(nameof(login), "Логин не может быть пустым");
+        }
         else if (login.Length < 3)
-            AddError(nameof(login), "Логин слишком короткий. Логин должен содержать минимум 3 символа");
+        {
+            this.AddError(nameof(login), "Логин слишком короткий. Логин должен содержать минимум 3 символа");
+        }
 
         if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
-            AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
+        {
+            this.AddError(nameof(password), "Пароль не должен быть пустым и должен содержать не менее 6 символов");
+        }
 
         // вызов единого метода для вывода ошибок валидации
-        EnsureValid();
+        this.EnsureValid();
     }
 }

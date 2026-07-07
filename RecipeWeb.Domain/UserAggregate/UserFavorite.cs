@@ -1,13 +1,8 @@
 namespace RecipeWeb.Domain.UserAggregate;
 
-public class UserFavorite
+public class UserFavorite(Guid userId, Guid recipeId)
 {
-    public UserFavorite(Guid userId, Guid recipeId)
-    {
-        UserId = userId;
-        RecipeId = recipeId;
-    }
+    public Guid UserId { get; set; } = userId;
 
-    public Guid UserId { get; set; }
-    public Guid RecipeId { get; set; }
+    public Guid RecipeId { get; set; } = recipeId;
 }

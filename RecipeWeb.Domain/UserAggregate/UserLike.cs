@@ -1,13 +1,8 @@
 namespace RecipeWeb.Domain.UserAggregate;
 
-public class UserLike
+public class UserLike(Guid userId, Guid recipeId)
 {
-    public UserLike(Guid userId, Guid recipeId)
-    {
-        UserId = userId;
-        RecipeId = recipeId;
-    }
+    public Guid UserId { get; set; } = userId;
 
-    public Guid UserId { get; set; }
-    public Guid RecipeId { get; set; }
+    public Guid RecipeId { get; set; } = recipeId;
 }
