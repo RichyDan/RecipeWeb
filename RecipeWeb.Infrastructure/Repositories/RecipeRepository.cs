@@ -1,17 +1,17 @@
-    using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using RecipeWeb.Domain.RecipeAggregate;
 using RecipeWeb.Infrastructure.Persistence;
 
 namespace RecipeWeb.Infrastructure.Repositories;
 
-public class RecipeRepository(RecipeDbContext context) : IRecipeRepository
+public class RecipeRepository(RecipeDbContext context): IRecipeRepository
 {
     public async Task<Recipe> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        await AddIncludes(context.Recipes)
+        await this.AddIncludes(context.Recipes)
             .SingleOrDefaultAsync(r => r.Id == id, cancellationToken);
 
     public async Task<IEnumerable<Recipe>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        await AddIncludes(context.Recipes)
+        await this.AddIncludes(context.Recipes)
             .ToListAsync(cancellationToken);
 
     public async Task AddAsync(Recipe recipe, CancellationToken cancellationToken = default) =>

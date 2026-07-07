@@ -4,34 +4,50 @@ namespace RecipeWeb.Domain.RecipeAggregate;
 
 public class Step : Entity
 {
-    private Step() { }
-    public Step(string instructions) => Update(instructions);
+    private Step()
+    {
+    }
+
+    public Step(string instructions) => this.Update(instructions);
 
     public string Instructions { get; private set; }
 
     public void Update(string instructions)
     {
         if (string.IsNullOrWhiteSpace(instructions))
-            AddError(nameof(Instructions), "Инструкции не могут быть пустыми");
+        {
+            this.AddError(nameof(this.Instructions), "Инструкции не могут быть пустыми");
+        }
 
-        EnsureValid();
+        this.EnsureValid();
 
-        Instructions = instructions;
+        this.Instructions = instructions;
     }
 
     public bool Equals(Step? other)
     {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (other is null)
+        {
+            return false;
+        }
 
-        return Instructions == other.Instructions;
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return this.Instructions == other.Instructions;
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj is not Step other) return false;
-        return Equals(other);
+        if (obj is not Step other)
+        {
+            return false;
+        }
+
+        return this.Equals(other);
     }
 
-    public override int GetHashCode() => Instructions?.GetHashCode() ?? 0;
+    public override int GetHashCode() => this.Instructions?.GetHashCode() ?? 0;
 }

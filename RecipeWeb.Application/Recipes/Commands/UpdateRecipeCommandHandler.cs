@@ -3,31 +3,31 @@ using RecipeWeb.Domain.RecipeAggregate;
 
 namespace RecipeWeb.Application.Recipes.Commands;
 
-public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository) : ICommandHandler<UpdateRecipeCommand>
+public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository): ICommandHandler<UpdateRecipeCommand>
 {
     public async Task Handle(UpdateRecipeCommand command, CancellationToken cancellationToken)
     {
-        Recipe recipe = await recipeRepository.GetByIdAsync(command.RecipeId) ??
-            throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
+        Recipe recipe = await recipeRepository.GetByIdAsync(command.recipeId) ??
+            throw new InvalidOperationException($"Рецепт с Id {command.recipeId} не найден");
 
-        var ingredients = command.Ingredients?
-            .Select(i => new Ingredient(i.Name, i.Products))
+        var ingredients = command.ingredients?
+            .Select(i => new Ingredient(i.name, i.products))
             .ToList();
 
-        var steps = command.Steps?
-            .Select(s => new Step(s.Instructions))
+        var steps = command.steps?
+            .Select(s => new Step(s.instructions))
             .ToList();
 
-        var tags = command.Tags?
-            .Select(t => new Tag(t.Name))
+        var tags = command.tags?
+            .Select(t => new Tag(t.name))
             .ToList();
 
         recipe.Update(
-            command.Name,
-            command.Description,
-            command.TimeToCook,
-            command.CountPersons,
-            command.ImagePath,
+            command.name,
+            command.description,
+            command.timeToCook,
+            command.countPersons,
+            command.imagePath,
             ingredients,
             steps,
             tags);

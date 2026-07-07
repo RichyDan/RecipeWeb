@@ -5,12 +5,12 @@ using RecipeWeb.Application.Recipes.Queries;
 
 namespace RecipeWeb.Infrastructure.Persistence.QueryHandlers.Recipes;
 
-public class GetRecipeByIdQueryHandler(RecipeDbContext context) : IQueryHandler<GetRecipeByIdQuery, RecipeDto?>
+public class GetRecipeByIdQueryHandler(RecipeDbContext context): IQueryHandler<GetRecipeByIdQuery, RecipeDto?>
 {
     public async Task<RecipeDto?> Handle(GetRecipeByIdQuery query, CancellationToken cancellationToken) =>
         await context.Recipes
             .AsNoTracking()
-            .Where(recipe => recipe.Id == query.RecipeId)
+            .Where(recipe => recipe.Id == query.recipeId)
             .Select(recipe => new RecipeDto(
                 recipe.Id,
                 recipe.Name,
@@ -21,7 +21,6 @@ public class GetRecipeByIdQueryHandler(RecipeDbContext context) : IQueryHandler<
                 recipe.AuthorId,
                 recipe.Ingredients.Select(i => new IngredientDto(i.Name, i.Products.ToList())).ToList(),
                 recipe.Steps.Select(s => new StepDto(s.Instructions)).ToList(),
-                recipe.Tags.Select(t => new TagDto(t.Name)).ToList()
-            ))
+                recipe.Tags.Select(t => new TagDto(t.Name)).ToList()))
             .FirstOrDefaultAsync(cancellationToken);
 }

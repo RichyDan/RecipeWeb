@@ -3,8 +3,8 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.WebAPI.Behaviors;
 
-public class TransactionBehavior<TCommand, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TCommand, TResponse>
-    where TCommand : ICommand  // только команды
+public class TransactionBehavior<TCommand, TResponse>(IUnitOfWork unitOfWork): IPipelineBehavior<TCommand, TResponse>
+    where TCommand : ICommand // только команды
 {
     public async Task<TResponse> Handle(
         TCommand command,

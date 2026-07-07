@@ -9,15 +9,14 @@ public class RecipeTests
 
     // Вспомогательный метод для создания начальных данных
     private (List<Ingredient>, List<Step>, List<Tag>) CreateDefaultCollections() => (
-        new List<Ingredient> { new Ingredient("Мука", ["Пшеница"]) },
+        new List<Ingredient> { new Ingredient("Мука",["Пшеница"]) },
         new List<Step> { new Step("Замесить тесто") },
-        new List<Tag> { new Tag("Выпечка") }
-    );
+        new List<Tag> { new Tag("Выпечка") });
 
     [Fact]
     public void Recipe_Should_BeCreated_Correctly()
     {
-        var (ingredients, steps, tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = this.CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",
@@ -43,7 +42,7 @@ public class RecipeTests
     public void Recipe_Update_Should_ModifyAllFieldsAndSynchronizeCollections()
     {
         // Arrange
-        var (initialIngredients, initialSteps, initialTags) = CreateDefaultCollections();
+        var (initialIngredients, initialSteps, initialTags) = this.CreateDefaultCollections();
         var initialIngredient = initialIngredients[0];
 
         var recipe = new Recipe(
@@ -59,8 +58,8 @@ public class RecipeTests
 
         var newIngredients = new List<Ingredient>
         {
-            new Ingredient("Мука", ["Пшеница"]),
-            new Ingredient("Соль", ["Морская"])
+            new Ingredient("Мука",["Пшеница"]),
+            new Ingredient("Соль",["Морская"]),
         };
 
         var newSteps = new List<Step> { new Step("Новый шаг") };
@@ -103,7 +102,7 @@ public class RecipeTests
     public void Recipe_Update_Should_KeepExistingCollections_When_NullIsPassed()
     {
         // Arrange
-        var (ingredients, steps, tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = this.CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",

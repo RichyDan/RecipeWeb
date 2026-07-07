@@ -2,4 +2,4 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.Application.Recipes.Commands;
 
-public record DeleteRecipeCommand(Guid RecipeId) : ICommand;
+public record DeleteRecipeCommand(Guid recipeId): ICommand;

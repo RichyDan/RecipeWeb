@@ -8,9 +8,10 @@ namespace RecipeWeb.Domain.RecipeAggregate.Tests;
 public class UserTests
 {
     // Вспомогательный метод для установки Id
-    private T SetId<T>(T entity, Guid id) where T : Entity
+    private T SetId<T>(T entity, Guid id)
+        where T : Entity
     {
-        typeof(Entity).GetProperty("Id", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)!
+        typeof(Entity).GetProperty("Id", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) !
             .SetValue(entity, id);
         return entity;
     }
@@ -47,7 +48,7 @@ public class UserTests
     public void AddLike_ShouldAddRecipeToLiked()
     {
         // Arrange
-        User user = CreateValidUser();
+        User user = this.CreateValidUser();
         var recipeId = Guid.NewGuid();
 
         // Act
@@ -64,7 +65,7 @@ public class UserTests
     public void AddLike_ShouldNotAddDuplicate()
     {
         // Arrange
-        User user = CreateValidUser();
+        User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);
 
@@ -79,7 +80,7 @@ public class UserTests
     public void RemoveLike_ShouldRemoveRecipe()
     {
         // Arrange
-        User user = CreateValidUser();
+        User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);
 
@@ -95,7 +96,7 @@ public class UserTests
     public void AddToFavorites_ShouldAddRecipe()
     {
         // Arrange
-        User user = CreateValidUser();
+        User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
 
         // Act
@@ -111,7 +112,7 @@ public class UserTests
     public void RemoveFromFavorites_ShouldClearCollection()
     {
         // Arrange
-        User user = CreateValidUser();
+        User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
         user.AddToFavorites(recipeId);
 
@@ -128,8 +129,8 @@ public class UserTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        User user =CreateValidUser();
-        user = SetId(user, userId);
+        User user = this.CreateValidUser();
+        user = this.SetId(user, userId);
 
         Guid recipeId = Guid.NewGuid();
         user.AddLike(recipeId);

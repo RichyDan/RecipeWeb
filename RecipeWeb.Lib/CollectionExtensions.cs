@@ -8,7 +8,9 @@ public static class CollectionExtensions
         where T : class
     {
         if (newList == null)
+        {
             return;
+        }
 
         var newSet = newList.ToHashSet();
 
@@ -19,7 +21,9 @@ public static class CollectionExtensions
         foreach (T newItem in newList)
         {
             if (!internalList.Contains(newItem))
+            {
                 internalList.Add(newItem);
+            }
         }
     }
 }
