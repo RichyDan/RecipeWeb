@@ -6,7 +6,7 @@ using RecipeWeb.Infrastructure.Persistence;
 using RecipeWeb.Infrastructure.Repositories;
 using RecipeWeb.WebAPI.Behaviors;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMediatR(cfg =>
@@ -28,12 +28,12 @@ builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Применить миграции при старте
-using (var scope = app.Services.CreateScope())
+using (IServiceScope scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<RecipeDbContext>();
+    RecipeDbContext dbContext = scope.ServiceProvider.GetRequiredService<RecipeDbContext>();
     dbContext.Database.Migrate();
 }
 
@@ -43,6 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

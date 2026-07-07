@@ -6,6 +6,7 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class StepConfiguration : IEntityTypeConfiguration<Step>
 {
+    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Step> builder)
     {
         builder.HasKey(s => s.Id);

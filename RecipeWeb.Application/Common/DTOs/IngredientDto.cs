@@ -1,3 +1,3 @@
 namespace RecipeWeb.Application.Common.DTOs;
 
-public record IngredientDto(string Name, List<string> Products);
+public record IngredientDto(string name, List<string> products);

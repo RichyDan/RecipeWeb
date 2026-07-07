@@ -7,17 +7,17 @@ namespace RecipeWeb.Infrastructure.Persistence.QueryHandlers.Users;
 
 public class GetUserByIdQueryHandler(RecipeDbContext context) : IQueryHandler<GetUserByIdQuery, UserDto?>
 {
+    /// <inheritdoc/>
     public async Task<UserDto?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken) =>
         await context.Users
             .AsNoTracking()
-            .Where(user => user.Id == query.UserId)
+            .Where(user => user.Id == query.userId)
             .Select(user => new UserDto(
                 user.Id,
                 user.FirstName,
                 user.Login,
                 user.Description,
                 user.LikedRecipes.Select(l => l.RecipeId).ToList(),
-                user.FavoriteRecipes.Select(f => f.RecipeId).ToList()
-            ))
+                user.FavoriteRecipes.Select(f => f.RecipeId).ToList()))
             .FirstOrDefaultAsync(cancellationToken);
 }

@@ -5,27 +5,28 @@ namespace RecipeWeb.Application.Recipes.Commands;
 
 public class CreateRecipeCommandHandler(IRecipeRepository recipeRepository) : ICommandHandler<CreateRecipeCommand>
 {
+    /// <inheritdoc/>
     public async Task Handle(CreateRecipeCommand command, CancellationToken cancellationToken)
     {
-        var ingredients = command.Ingredients
-            .Select(i => new Ingredient(i.Name, i.Products))
+        var ingredients = command.ingredients
+            .Select(i => new Ingredient(i.name, i.products))
             .ToList();
 
-        var steps = command.Steps
-            .Select(s => new Step(s.Instructions))
+        var steps = command.steps
+            .Select(s => new Step(s.instructions))
             .ToList();
 
-        var tags = command.Tags
-            .Select(t => new Tag(t.Name))
+        var tags = command.tags
+            .Select(t => new Tag(t.name))
             .ToList();
 
         var recipe = new Recipe(
-            command.Name,
-            command.Description,
-            command.TimeToCook,
-            command.CountPersons,
-            command.ImagePath,
-            command.AuthorId,
+            command.name,
+            command.description,
+            command.timeToCook,
+            command.countPersons,
+            command.imagePath,
+            command.authorId,
             ingredients,
             steps,
             tags);

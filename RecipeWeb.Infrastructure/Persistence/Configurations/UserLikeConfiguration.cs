@@ -7,6 +7,7 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class UserLikeConfiguration : IEntityTypeConfiguration<UserLike>
 {
+    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<UserLike> builder)
     {
         // Составной ключ из UserId и RecipeId

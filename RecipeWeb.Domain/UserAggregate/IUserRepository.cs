@@ -2,10 +2,15 @@ namespace RecipeWeb.Domain.UserAggregate;
 
 public interface IUserRepository
 {
-    Task<User> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<User> FindByFirstNameAsync(string firstname, CancellationToken cancellationToken = default);
-    Task<User> FindByLoginAsync(string login, CancellationToken cancellationToken = default);
-    Task AddAsync(User user, CancellationToken cancellationToken = default);
-    void Update(User user);
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<User> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+    public Task<User> FindByFirstNameAsync(string firstname, CancellationToken cancellationToken = default);
+
+    public Task<User> FindByLoginAsync(string login, CancellationToken cancellationToken = default);
+
+    public Task AddAsync(User user, CancellationToken cancellationToken = default);
+
+    public void Update(User user);
+
+    public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }
