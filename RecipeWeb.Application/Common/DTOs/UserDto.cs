@@ -1,9 +1,10 @@
 namespace RecipeWeb.Application.Common.DTOs;
 
 public record UserDto(
-    Guid id,
-    string firstName,
-    string login,
-    string description,
-    List<Guid> likedRecipeIds,
-    List<Guid> favoriteRecipeIds);
+    Guid Id,
+    string FirstName,
+    string Login,
+    string Description,
+    List<Guid> LikedRecipeIds,
+    List<Guid> FavoriteRecipeIds
+);

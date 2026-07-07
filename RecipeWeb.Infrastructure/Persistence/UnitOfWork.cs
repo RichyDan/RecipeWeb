@@ -4,29 +4,26 @@ namespace RecipeWeb.Infrastructure.Persistence;
 
 public class UnitOfWork(RecipeDbContext context) : IUnitOfWork, IDisposable
 {
-    private bool disposed;
+    private bool _disposed;
 
-    /// <inheritdoc/>
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
         context.SaveChangesAsync(cancellationToken);
 
-    /// <inheritdoc/>
     public void Dispose()
     {
-        this.Dispose(disposing: true);
+        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!this.disposed)
+        if (!_disposed)
         {
             if (disposing)
             {
                 context.Dispose();
             }
-
-            this.disposed = true;
+            _disposed = true;
         }
     }
 }

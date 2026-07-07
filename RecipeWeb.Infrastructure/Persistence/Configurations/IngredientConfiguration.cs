@@ -6,7 +6,6 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Ingredient> builder)
     {
         builder.HasKey(i => i.Id);

@@ -6,7 +6,6 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class TagConfiguration : IEntityTypeConfiguration<Tag>
 {
-    /// <inheritdoc/>
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
         builder.HasKey(t => t.Id);

@@ -3,4 +3,4 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.Application.Recipes.Queries;
 
-public record GetRecipeByIdQuery(Guid recipeId) : IQuery<RecipeDto?>;
+public record GetRecipeByIdQuery(Guid RecipeId) : IQuery<RecipeDto?>;

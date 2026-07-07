@@ -5,21 +5,18 @@ namespace RecipeWeb.Application.Users.Commands;
 
 public class RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : ICommandHandler<RegisterUserCommand>
 {
-    /// <inheritdoc/>
     public async Task Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        User existing = await userRepository.FindByLoginAsync(command.login, cancellationToken);
+        User existing = await userRepository.FindByLoginAsync(command.Login, cancellationToken);
 
         if (existing != null)
-        {
-            throw new InvalidOperationException($"Пользователь с логином '{command.login}' уже существует");
-        }
+            throw new InvalidOperationException($"Пользователь с логином '{command.Login}' уже существует");
 
         var user = new User(
-            command.firstName,
-            command.login,
-            passwordHasher.Hash(command.password),
-            command.description);
+            command.FirstName,
+            command.Login,
+            passwordHasher.Hash(command.Password),
+            command.Description);
 
         await userRepository.AddAsync(user, cancellationToken);
     }

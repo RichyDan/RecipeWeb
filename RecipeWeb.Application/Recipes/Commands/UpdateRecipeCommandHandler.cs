@@ -5,30 +5,29 @@ namespace RecipeWeb.Application.Recipes.Commands;
 
 public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository) : ICommandHandler<UpdateRecipeCommand>
 {
-    /// <inheritdoc/>
     public async Task Handle(UpdateRecipeCommand command, CancellationToken cancellationToken)
     {
-        Recipe recipe = await recipeRepository.GetByIdAsync(command.recipeId, cancellationToken) ??
-            throw new InvalidOperationException($"Рецепт с Id {command.recipeId} не найден");
+        Recipe recipe = await recipeRepository.GetByIdAsync(command.RecipeId) ??
+            throw new InvalidOperationException($"Рецепт с Id {command.RecipeId} не найден");
 
-        var ingredients = command.ingredients?
-            .Select(i => new Ingredient(i.name, i.products))
+        var ingredients = command.Ingredients?
+            .Select(i => new Ingredient(i.Name, i.Products))
             .ToList();
 
-        var steps = command.steps?
-            .Select(s => new Step(s.instructions))
+        var steps = command.Steps?
+            .Select(s => new Step(s.Instructions))
             .ToList();
 
-        var tags = command.tags?
-            .Select(t => new Tag(t.name))
+        var tags = command.Tags?
+            .Select(t => new Tag(t.Name))
             .ToList();
 
         recipe.Update(
-            command.name,
-            command.description,
-            command.timeToCook,
-            command.countPersons,
-            command.imagePath,
+            command.Name,
+            command.Description,
+            command.TimeToCook,
+            command.CountPersons,
+            command.ImagePath,
             ingredients,
             steps,
             tags);
