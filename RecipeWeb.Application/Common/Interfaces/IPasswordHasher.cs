@@ -2,7 +2,7 @@ namespace RecipeWeb.Application.Common.Interfaces;
 
 public interface IPasswordHasher
 {
-    string Hash(string password);
+    string Hash( string password );
 
-    bool Verify(string password, string hashedPassword);
+    bool Verify( string password, string hashedPassword );
 }

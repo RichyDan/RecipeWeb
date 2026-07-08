@@ -3,4 +3,4 @@ using RecipeWeb.Application.Common.Interfaces;
 
 namespace RecipeWeb.Application.Users.Queries;
 
-public record FindUserByLoginQuery(string login): IQuery<UserDto?>;
+public record FindUserByLoginQuery( string login ) : IQuery<UserDto?>;

@@ -6,4 +6,4 @@ public record UserDto(
     string login,
     string description,
     List<Guid> likedRecipeIds,
-    List<Guid> favoriteRecipeIds);
+    List<Guid> favoriteRecipeIds );

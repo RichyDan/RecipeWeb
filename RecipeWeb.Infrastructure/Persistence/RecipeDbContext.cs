@@ -5,7 +5,7 @@ using RecipeWeb.Domain.UserAggregate;
 
 namespace RecipeWeb.Infrastructure.Persistence;
 
-public class RecipeDbContext(DbContextOptions<RecipeDbContext> options): DbContext(options)
+public class RecipeDbContext( DbContextOptions<RecipeDbContext> options ) : DbContext( options )
 {
     public DbSet<Recipe> Recipes { get; set; }
 
@@ -21,10 +21,10 @@ public class RecipeDbContext(DbContextOptions<RecipeDbContext> options): DbConte
 
     public DbSet<UserFavorite> UserFavorites { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating( ModelBuilder modelBuilder )
     {
         modelBuilder.Ignore<ValidationError>();
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipeDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly( typeof( RecipeDbContext ).Assembly );
     }
 }

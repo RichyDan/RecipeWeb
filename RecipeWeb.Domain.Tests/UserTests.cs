@@ -1,18 +1,18 @@
-using System.Reflection;
 using FluentAssertions;
 using RecipeWeb.Domain.Common;
 using RecipeWeb.Domain.UserAggregate;
+using System.Reflection;
 
 namespace RecipeWeb.Domain.RecipeAggregate.Tests;
 
 public class UserTests
 {
     // Вспомогательный метод для установки Id
-    private T SetId<T>(T entity, Guid id)
+    private T SetId<T>( T entity, Guid id )
         where T : Entity
     {
-        typeof(Entity).GetProperty("Id", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) !
-            .SetValue(entity, id);
+        typeof( Entity ).GetProperty( "Id", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance )!
+            .SetValue( entity, id );
         return entity;
     }
 
@@ -31,14 +31,14 @@ public class UserTests
             firstName,
             login,
             password,
-            description);
+            description );
 
         // Assert
-        user.Id.Should().Be(Guid.Empty);
-        user.FirstName.Should().Be(firstName);
-        user.Login.Should().Be(login);
-        user.Password.Should().Be(password);
-        user.Description.Should().Be(description);
+        user.Id.Should().Be( Guid.Empty );
+        user.FirstName.Should().Be( firstName );
+        user.Login.Should().Be( login );
+        user.Password.Should().Be( password );
+        user.Description.Should().Be( description );
         user.LikedRecipes.Should().NotBeNull().And.BeEmpty();
         user.FavoriteRecipes.Should().NotBeNull().And.BeEmpty();
     }
@@ -52,13 +52,13 @@ public class UserTests
         var recipeId = Guid.NewGuid();
 
         // Act
-        user.AddLike(recipeId);
+        user.AddLike( recipeId );
 
         // Assert
-        user.LikedRecipes.Should().HaveCount(1);
+        user.LikedRecipes.Should().HaveCount( 1 );
         var like = user.LikedRecipes.First();
-        like.RecipeId.Should().Be(recipeId);
-        like.UserId.Should().Be(user.Id);
+        like.RecipeId.Should().Be( recipeId );
+        like.UserId.Should().Be( user.Id );
     }
 
     [Fact]
@@ -67,13 +67,13 @@ public class UserTests
         // Arrange
         User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
-        user.AddLike(recipeId);
+        user.AddLike( recipeId );
 
         // Act
-        user.AddLike(recipeId); // Пытаемся добавить второй раз
+        user.AddLike( recipeId ); // Пытаемся добавить второй раз
 
         // Assert
-        user.LikedRecipes.Should().HaveCount(1); // Количество не должно увеличиться
+        user.LikedRecipes.Should().HaveCount( 1 ); // Количество не должно увеличиться
     }
 
     [Fact]
@@ -82,10 +82,10 @@ public class UserTests
         // Arrange
         User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
-        user.AddLike(recipeId);
+        user.AddLike( recipeId );
 
         // Act
-        user.RemoveLike(recipeId);
+        user.RemoveLike( recipeId );
 
         // Assert
         user.LikedRecipes.Should().BeEmpty();
@@ -100,12 +100,12 @@ public class UserTests
         Guid recipeId = Guid.NewGuid();
 
         // Act
-        user.AddToFavorites(recipeId);
+        user.AddToFavorites( recipeId );
 
         // Assert
         var favorite = user.FavoriteRecipes.First();
-        favorite.RecipeId.Should().Be(recipeId);
-        favorite.UserId.Should().Be(user.Id);
+        favorite.RecipeId.Should().Be( recipeId );
+        favorite.UserId.Should().Be( user.Id );
     }
 
     [Fact]
@@ -114,10 +114,10 @@ public class UserTests
         // Arrange
         User user = this.CreateValidUser();
         Guid recipeId = Guid.NewGuid();
-        user.AddToFavorites(recipeId);
+        user.AddToFavorites( recipeId );
 
         // Act
-        user.RemoveFromFavorites(recipeId);
+        user.RemoveFromFavorites( recipeId );
 
         // Assert
         user.FavoriteRecipes.Should().BeEmpty();
@@ -130,28 +130,28 @@ public class UserTests
         // Arrange
         var userId = Guid.NewGuid();
         User user = this.CreateValidUser();
-        user = this.SetId(user, userId);
+        user = this.SetId( user, userId );
 
         Guid recipeId = Guid.NewGuid();
-        user.AddLike(recipeId);
+        user.AddLike( recipeId );
 
         // Act
         user.Update(
             "NewName",
             "NewLogin",
             "NewPassword",
-            "NewDescription");
+            "NewDescription" );
 
         // Assert
-        user.Id.Should().Be(userId);
-        user.FirstName.Should().Be("NewName");
-        user.Login.Should().Be("NewLogin");
-        user.Password.Should().Be("NewPassword");
-        user.Description.Should().Be("NewDescription");
+        user.Id.Should().Be( userId );
+        user.FirstName.Should().Be( "NewName" );
+        user.Login.Should().Be( "NewLogin" );
+        user.Password.Should().Be( "NewPassword" );
+        user.Description.Should().Be( "NewDescription" );
 
         // Проверяем, что лайки не стерлись при обычном обновлении
-        user.LikedRecipes.Should().HaveCount(1);
-        user.LikedRecipes.First().UserId.Should().Be(userId);
+        user.LikedRecipes.Should().HaveCount( 1 );
+        user.LikedRecipes.First().UserId.Should().Be( userId );
     }
 
     // Вспомогательный метод для быстрого создания пользователя
@@ -159,5 +159,5 @@ public class UserTests
         "TestUser",
         "test_login",
         "12345678",
-        "Description");
+        "Description" );
 }

@@ -8,15 +8,15 @@ public class Step : Entity
     {
     }
 
-    public Step(string instructions) => this.Update(instructions);
+    public Step( string instructions ) => this.Update( instructions );
 
     public string Instructions { get; private set; }
 
-    public void Update(string instructions)
+    public void Update( string instructions )
     {
-        if (string.IsNullOrWhiteSpace(instructions))
+        if (string.IsNullOrWhiteSpace( instructions ))
         {
-            this.AddError(nameof(this.Instructions), "Инструкции не могут быть пустыми");
+            this.AddError( nameof( this.Instructions ), "Инструкции не могут быть пустыми" );
         }
 
         this.EnsureValid();
@@ -24,14 +24,14 @@ public class Step : Entity
         this.Instructions = instructions;
     }
 
-    public bool Equals(Step? other)
+    public bool Equals( Step? other )
     {
         if (other is null)
         {
             return false;
         }
 
-        if (ReferenceEquals(this, other))
+        if (ReferenceEquals( this, other ))
         {
             return true;
         }
@@ -39,14 +39,14 @@ public class Step : Entity
         return this.Instructions == other.Instructions;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals( object? obj )
     {
         if (obj is not Step other)
         {
             return false;
         }
 
-        return this.Equals(other);
+        return this.Equals( other );
     }
 
     public override int GetHashCode() => this.Instructions?.GetHashCode() ?? 0;

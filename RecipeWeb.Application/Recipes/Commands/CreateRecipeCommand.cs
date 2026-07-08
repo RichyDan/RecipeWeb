@@ -12,4 +12,4 @@ public record CreateRecipeCommand(
     Guid authorId,
     List<IngredientDto> ingredients,
     List<StepDto> steps,
-    List<TagDto> tags): ICommand;
+    List<TagDto> tags ) : ICommand;

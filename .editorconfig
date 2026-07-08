@@ -1,6 +1,5 @@
 root = true
 
-# --- Общие настройки для всех файлов ---
 [*]
 indent_style = space
 indent_size = 4
@@ -10,38 +9,24 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-# --- Только C# файлы ---
 [*.cs]
-# Отступы и скобки
 indent_size = 4
-csharp_new_line_before_open_brace = all                # скобки на новой строке (стиль Олмана)
+
+# Фигурные скобки на новой строке
+csharp_new_line_before_open_brace = all
 csharp_new_line_before_else = true
 csharp_new_line_before_catch = true
 csharp_new_line_before_finally = true
 
-# Пробелы вокруг бинарных операторов
+# Пробелы вокруг операторов
 csharp_space_around_binary_operators = before_and_after
 
-# Пробелы внутри скобок — основное
-csharp_space_between_parentheses = true                # if ( ... ), while ( ... ), for ( ... ) и т.д.
-
-# Пробелы внутри скобок с параметрами методов
-csharp_space_between_method_declaration_parameter_list_parentheses = true   # void Foo( int x )
-csharp_space_between_method_call_parameter_list_parentheses = true          # obj.Bar( 42 )
-
-# Пробелы внутри пустых скобок методов (без параметров)
-csharp_space_between_method_declaration_empty_parentheses = false           # Foo()
-csharp_space_between_method_call_empty_parentheses = false                  # obj.Bar()
-
-# Пробелы в остальных скобках (приведения типов, new и пр.)
+# Пробелы внутри скобок
+csharp_space_between_parentheses = true
+csharp_space_between_method_declaration_parameter_list_parentheses = true
+csharp_space_between_method_call_parameter_list_parentheses = true
 csharp_space_between_other_parentheses = true
 
-# Пробелы в наследовании:  ) : BaseClass
+# Пробел перед двоеточием в наследовании (классы, record, интерфейсы)
 csharp_space_before_colon_in_inheritance_clause = true
 csharp_space_after_colon_in_inheritance_clause = true
-
-[*.cs]
-# Отключаем правила StyleCop, которые не нужны / не можем исправить массово
-dotnet_diagnostic.SA1633.severity = none   # Требование заголовка файла (copyright)
-dotnet_diagnostic.SA1600.severity = none   # Отсутствует XML-документация на элементе
-dotnet_diagnostic.SA1202.severity = none   # Порядок членов (public перед private и т.п.)

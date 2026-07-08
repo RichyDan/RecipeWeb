@@ -6,4 +6,4 @@ public record RegisterUserCommand(
     string firstName,
     string login,
     string password,
-    string description): ICommand;
+    string description ) : ICommand;

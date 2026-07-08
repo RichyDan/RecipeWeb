@@ -5,12 +5,12 @@ using RecipeWeb.Application.Recipes.Queries;
 
 namespace RecipeWeb.Infrastructure.Persistence.QueryHandlers.Recipes;
 
-public class GetAllRecipesQueryHandler(RecipeDbContext context): IQueryHandler<GetAllRecipesQuery, List<RecipeDto>>
+public class GetAllRecipesQueryHandler( RecipeDbContext context ) : IQueryHandler<GetAllRecipesQuery, List<RecipeDto>>
 {
-    public async Task<List<RecipeDto>> Handle(GetAllRecipesQuery query, CancellationToken cancellationToken) =>
+    public async Task<List<RecipeDto>> Handle( GetAllRecipesQuery query, CancellationToken cancellationToken ) =>
         await context.Recipes
             .AsNoTracking()
-            .Select(recipe => new RecipeDto(
+            .Select( recipe => new RecipeDto(
             recipe.Id,
             recipe.Name,
             recipe.Description,
@@ -18,8 +18,8 @@ public class GetAllRecipesQueryHandler(RecipeDbContext context): IQueryHandler<G
             recipe.CountPersons,
             recipe.ImagePath,
             recipe.AuthorId,
-            recipe.Ingredients.Select(i => new IngredientDto(i.Name, i.Products.ToList())).ToList(),
-            recipe.Steps.Select(s => new StepDto(s.Instructions)).ToList(),
-            recipe.Tags.Select(t => new TagDto(t.Name)).ToList()))
-            .ToListAsync(cancellationToken);
+            recipe.Ingredients.Select( i => new IngredientDto( i.Name, i.Products.ToList() ) ).ToList(),
+            recipe.Steps.Select( s => new StepDto( s.Instructions ) ).ToList(),
+            recipe.Tags.Select( t => new TagDto( t.Name ) ).ToList() ) )
+            .ToListAsync( cancellationToken );
 }

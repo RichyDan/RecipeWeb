@@ -1,3 +1,3 @@
 namespace RecipeWeb.Application.Common.DTOs;
 
-public record TagDto(string name);
+public record TagDto( string name );

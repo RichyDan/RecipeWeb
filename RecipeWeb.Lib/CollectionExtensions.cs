@@ -4,7 +4,7 @@ public static class CollectionExtensions
 {
     public static void SynchronizeByContent<T>(
         this List<T> internalList,
-        IEnumerable<T> newList)
+        IEnumerable<T> newList )
         where T : class
     {
         if (newList == null)
@@ -15,14 +15,14 @@ public static class CollectionExtensions
         var newSet = newList.ToHashSet();
 
         // Удаляем элементы, которых нет в новом списке (сравнение через Equals)
-        internalList.RemoveAll(item => !newSet.Contains(item));
+        internalList.RemoveAll( item => !newSet.Contains( item ) );
 
         // Добавляем те, которых еще нет во внутреннем списке
         foreach (T newItem in newList)
         {
-            if (!internalList.Contains(newItem))
+            if (!internalList.Contains( newItem ))
             {
-                internalList.Add(newItem);
+                internalList.Add( newItem );
             }
         }
     }

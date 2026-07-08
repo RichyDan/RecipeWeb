@@ -7,18 +7,18 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class UserFavoriteConfiguration : IEntityTypeConfiguration<UserFavorite>
 {
-    public void Configure(EntityTypeBuilder<UserFavorite> builder)
+    public void Configure( EntityTypeBuilder<UserFavorite> builder )
     {
-        builder.HasKey(uf => new { uf.UserId, uf.RecipeId });
+        builder.HasKey( uf => new { uf.UserId, uf.RecipeId } );
 
         builder.HasOne<User>()
-               .WithMany(u => u.FavoriteRecipes)
-               .HasForeignKey(uf => uf.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .WithMany( u => u.FavoriteRecipes )
+               .HasForeignKey( uf => uf.UserId )
+               .OnDelete( DeleteBehavior.Cascade );
 
         builder.HasOne<Recipe>()
                .WithMany()
-               .HasForeignKey(uf => uf.RecipeId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasForeignKey( uf => uf.RecipeId )
+               .OnDelete( DeleteBehavior.Cascade );
     }
 }

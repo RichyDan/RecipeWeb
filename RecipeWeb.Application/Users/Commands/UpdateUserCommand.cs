@@ -7,4 +7,4 @@ public record UpdateUserCommand(
     string firstName,
     string login,
     string password,
-    string description): ICommand;
+    string description ) : ICommand;

@@ -3,23 +3,23 @@ using RecipeWeb.Domain.RecipeAggregate;
 
 namespace RecipeWeb.Application.Recipes.Commands;
 
-public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository): ICommandHandler<UpdateRecipeCommand>
+public class UpdateRecipeCommandHandler( IRecipeRepository recipeRepository ) : ICommandHandler<UpdateRecipeCommand>
 {
-    public async Task Handle(UpdateRecipeCommand command, CancellationToken cancellationToken)
+    public async Task Handle( UpdateRecipeCommand command, CancellationToken cancellationToken )
     {
-        Recipe recipe = await recipeRepository.GetByIdAsync(command.recipeId) ??
-            throw new InvalidOperationException($"Рецепт с Id {command.recipeId} не найден");
+        Recipe recipe = await recipeRepository.GetByIdAsync( command.recipeId ) ??
+            throw new InvalidOperationException( $"Рецепт с Id {command.recipeId} не найден" );
 
         var ingredients = command.ingredients?
-            .Select(i => new Ingredient(i.name, i.products))
+            .Select( i => new Ingredient( i.name, i.products ) )
             .ToList();
 
         var steps = command.steps?
-            .Select(s => new Step(s.instructions))
+            .Select( s => new Step( s.instructions ) )
             .ToList();
 
         var tags = command.tags?
-            .Select(t => new Tag(t.name))
+            .Select( t => new Tag( t.name ) )
             .ToList();
 
         recipe.Update(
@@ -30,6 +30,6 @@ public class UpdateRecipeCommandHandler(IRecipeRepository recipeRepository): ICo
             command.imagePath,
             ingredients,
             steps,
-            tags);
+            tags );
     }
 }

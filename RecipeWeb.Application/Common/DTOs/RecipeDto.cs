@@ -10,4 +10,4 @@ public record RecipeDto(
     Guid authorId,
     List<IngredientDto> ingredients,
     List<StepDto> steps,
-    List<TagDto> tags);
+    List<TagDto> tags );
