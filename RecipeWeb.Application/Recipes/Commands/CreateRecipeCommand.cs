@@ -4,13 +4,12 @@ using RecipeWeb.Application.Common.Interfaces;
 namespace RecipeWeb.Application.Recipes.Commands;
 
 public record CreateRecipeCommand(
-    string Name,
-    string Description,
-    int TimeToCook,
-    int CountPersons,
-    string ImagePath,
-    Guid AuthorId,
-    List<IngredientDto> Ingredients,
-    List<StepDto> Steps,
-    List<TagDto> Tags
-) : ICommand;
+    string name,
+    string description,
+    int timeToCook,
+    int countPersons,
+    string imagePath,
+    Guid authorId,
+    List<IngredientDto> ingredients,
+    List<StepDto> steps,
+    List<TagDto> tags ) : ICommand;

@@ -9,15 +9,14 @@ public class RecipeTests
 
     // Вспомогательный метод для создания начальных данных
     private (List<Ingredient>, List<Step>, List<Tag>) CreateDefaultCollections() => (
-        new List<Ingredient> { new Ingredient("Мука", ["Пшеница"]) },
-        new List<Step> { new Step("Замесить тесто") },
-        new List<Tag> { new Tag("Выпечка") }
-    );
+        new List<Ingredient> { new Ingredient( "Мука", ["Пшеница"] ) },
+        new List<Step> { new Step( "Замесить тесто" ) },
+        new List<Tag> { new Tag( "Выпечка" ) });
 
     [Fact]
     public void Recipe_Should_BeCreated_Correctly()
     {
-        var (ingredients, steps, tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = this.CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",
@@ -28,22 +27,22 @@ public class RecipeTests
             TestAuthorId,
             ingredients,
             steps,
-            tags);
+            tags );
 
         // Проверки создания
-        recipe.Id.Should().Be(Guid.Empty);
-        recipe.Name.Should().Be("Борщ");
-        recipe.Ingredients.Should().HaveCount(1);
-        recipe.AuthorId.Should().Be(TestAuthorId);
-        recipe.Steps.Should().HaveCount(1);
-        recipe.Tags.Should().HaveCount(1);
+        recipe.Id.Should().Be( Guid.Empty );
+        recipe.Name.Should().Be( "Борщ" );
+        recipe.Ingredients.Should().HaveCount( 1 );
+        recipe.AuthorId.Should().Be( TestAuthorId );
+        recipe.Steps.Should().HaveCount( 1 );
+        recipe.Tags.Should().HaveCount( 1 );
     }
 
     [Fact]
     public void Recipe_Update_Should_ModifyAllFieldsAndSynchronizeCollections()
     {
         // Arrange
-        var (initialIngredients, initialSteps, initialTags) = CreateDefaultCollections();
+        var (initialIngredients, initialSteps, initialTags) = this.CreateDefaultCollections();
         var initialIngredient = initialIngredients[0];
 
         var recipe = new Recipe(
@@ -55,16 +54,16 @@ public class RecipeTests
             TestAuthorId,
             initialIngredients,
             initialSteps,
-            initialTags);
+            initialTags );
 
         var newIngredients = new List<Ingredient>
         {
-            new Ingredient("Мука", ["Пшеница"]),
-            new Ingredient("Соль", ["Морская"])
+            new Ingredient("Мука",["Пшеница"]),
+            new Ingredient("Соль",["Морская"]),
         };
 
-        var newSteps = new List<Step> { new Step("Новый шаг") };
-        var newTags = new List<Tag> { new Tag("Веган") };
+        var newSteps = new List<Step> { new Step( "Новый шаг" ) };
+        var newTags = new List<Tag> { new Tag( "Веган" ) };
 
         // Act
         recipe.Update(
@@ -75,35 +74,35 @@ public class RecipeTests
             "https://new.com/2.jpg",
             newIngredients,
             newSteps,
-            newTags);
+            newTags );
 
         // Assert
         // Проверка простых полей
-        recipe.Name.Should().Be("Новое имя");
-        recipe.Description.Should().Be("Новое описание");
-        recipe.TimeToCook.Should().Be(60);
-        recipe.CountPersons.Should().Be(4);
-        recipe.ImagePath.Should().Be("https://new.com/2.jpg");
-        recipe.AuthorId.Should().Be(TestAuthorId);
+        recipe.Name.Should().Be( "Новое имя" );
+        recipe.Description.Should().Be( "Новое описание" );
+        recipe.TimeToCook.Should().Be( 60 );
+        recipe.CountPersons.Should().Be( 4 );
+        recipe.ImagePath.Should().Be( "https://new.com/2.jpg" );
+        recipe.AuthorId.Should().Be( TestAuthorId );
 
         // Проверка синхронизации ингредиентов
-        recipe.Ingredients.Should().HaveCount(2);
-        recipe.Ingredients.Should().Contain(i => i.Name == "Соль");
+        recipe.Ingredients.Should().HaveCount( 2 );
+        recipe.Ingredients.Should().Contain( i => i.Name == "Соль" );
 
         // Проверка сохранения ссылки для неизмененного контента
-        recipe.Ingredients.First(i => i.Name == "Мука").Should().BeSameAs(initialIngredient);
+        recipe.Ingredients.First( i => i.Name == "Мука" ).Should().BeSameAs( initialIngredient );
 
         // Проверка шагов и тегов
-        recipe.Steps.Should().HaveCount(1).And.ContainSingle(s => s.Instructions == "Новый шаг");
-        recipe.Tags.Should().HaveCount(1).And.ContainSingle(t => t.Name == "Веган");
-        recipe.Tags.Should().NotContain(t => t.Name == "Выпечка");
+        recipe.Steps.Should().HaveCount( 1 ).And.ContainSingle( s => s.Instructions == "Новый шаг" );
+        recipe.Tags.Should().HaveCount( 1 ).And.ContainSingle( t => t.Name == "Веган" );
+        recipe.Tags.Should().NotContain( t => t.Name == "Выпечка" );
     }
 
     [Fact]
     public void Recipe_Update_Should_KeepExistingCollections_When_NullIsPassed()
     {
         // Arrange
-        var (ingredients, steps, tags) = CreateDefaultCollections();
+        var (ingredients, steps, tags) = this.CreateDefaultCollections();
 
         var recipe = new Recipe(
             "Борщ",
@@ -114,7 +113,7 @@ public class RecipeTests
             TestAuthorId,
             ingredients,
             steps,
-            tags);
+            tags );
 
         // Act
         recipe.Update(
@@ -125,28 +124,28 @@ public class RecipeTests
             recipe.ImagePath,
             ingredients: null,
             steps: null,
-            tags: null);
+            tags: null );
 
         // Assert
         // Коллекции не должны измениться или очиститься
-        recipe.Ingredients.Should().HaveCount(1);
-        recipe.Steps.Should().HaveCount(1);
-        recipe.Tags.Should().HaveCount(1);
+        recipe.Ingredients.Should().HaveCount( 1 );
+        recipe.Steps.Should().HaveCount( 1 );
+        recipe.Tags.Should().HaveCount( 1 );
     }
 
     [Theory]
-    [InlineData("", "Описание", 30, 2, "https://ok.com", "Name")]
-    [InlineData("Название", "", 30, 2, "https://ok.com", "Description")]
-    [InlineData("Название", "Описание", 0, 2, "https://ok.com", "TimeToCook")]
-    [InlineData("Название", "Описание", 30, 0, "https://ok.com", "CountPersons")]
-    [InlineData("Название", "Описание", 30, 2, "not-a-url", "imageUrl")]
+    [InlineData( "", "Описание", 30, 2, "https://ok.com", "Name" )]
+    [InlineData( "Название", "", 30, 2, "https://ok.com", "Description" )]
+    [InlineData( "Название", "Описание", 0, 2, "https://ok.com", "TimeToCook" )]
+    [InlineData( "Название", "Описание", 30, 0, "https://ok.com", "CountPersons" )]
+    [InlineData( "Название", "Описание", 30, 2, "not-a-url", "imageUrl" )]
     public void Recipe_Should_ThrowException_When_ValidationFails(
         string name,
         string desc,
         int time,
         int persons,
         string url,
-        string errorPart)
+        string errorPart )
     {
         // Act
         Action act = () => new Recipe(
@@ -158,9 +157,9 @@ public class RecipeTests
             Guid.NewGuid(),
             [],
             [],
-            []);
+            [] );
 
         // Assert
-        act.Should().Throw<InvalidOperationException>().WithMessage($"*{errorPart}*");
+        act.Should().Throw<InvalidOperationException>().WithMessage( $"*{errorPart}*" );
     }
 }

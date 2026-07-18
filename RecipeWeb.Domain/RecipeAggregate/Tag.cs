@@ -4,34 +4,50 @@ namespace RecipeWeb.Domain.RecipeAggregate;
 
 public class Tag : Entity
 {
-    private Tag() { }
+    private Tag()
+    {
+    }
 
-    public Tag(string name) => Update(name);
+    public Tag( string name ) => this.Update( name );
 
     public string Name { get; private set; }
 
-    public void Update(string name)
+    public void Update( string name )
     {
-        if (string.IsNullOrWhiteSpace(name))
-            AddError(nameof(Name), "Название тега не может быть пустым");
-        EnsureValid();
+        if (string.IsNullOrWhiteSpace( name ))
+        {
+            this.AddError( nameof( this.Name ), "Название тега не может быть пустым" );
+        }
 
-        Name = name;
+        this.EnsureValid();
+
+        this.Name = name;
     }
 
-    public bool Equals(Tag? other)
+    public bool Equals( Tag? other )
     {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (other is null)
+        {
+            return false;
+        }
 
-        return Name == other.Name;
+        if (ReferenceEquals( this, other ))
+        {
+            return true;
+        }
+
+        return this.Name == other.Name;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals( object? obj )
     {
-        if (obj is not Tag other) return false;
-        return Equals(other);
+        if (obj is not Tag other)
+        {
+            return false;
+        }
+
+        return this.Equals( other );
     }
 
-    public override int GetHashCode() => Name?.GetHashCode() ?? 0;
+    public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 }

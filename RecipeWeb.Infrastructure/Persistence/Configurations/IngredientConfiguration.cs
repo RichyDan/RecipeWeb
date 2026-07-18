@@ -6,22 +6,22 @@ namespace RecipeWeb.Infrastructure.Persistence.Configurations;
 
 public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
 {
-    public void Configure(EntityTypeBuilder<Ingredient> builder)
+    public void Configure( EntityTypeBuilder<Ingredient> builder )
     {
-        builder.HasKey(i => i.Id);
+        builder.HasKey( i => i.Id );
 
-        builder.Property(i => i.Name)
+        builder.Property( i => i.Name )
                .IsRequired()
-               .HasMaxLength(200);
+               .HasMaxLength( 200 );
 
-        builder.PrimitiveCollection(i => i.Products)
+        builder.PrimitiveCollection( i => i.Products )
                .ElementType()
-               .HasMaxLength(5000)
+               .HasMaxLength( 5000 )
                .IsRequired();
 
         builder.HasOne<Recipe>()
-               .WithMany(r => r.Ingredients)
-               .HasForeignKey("RecipeId")
-               .OnDelete(DeleteBehavior.Cascade);
+               .WithMany( r => r.Ingredients )
+               .HasForeignKey( "RecipeId" )
+               .OnDelete( DeleteBehavior.Cascade );
     }
 }
